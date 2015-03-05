@@ -2,7 +2,7 @@
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
     <version>0.0.1</version>
-    <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy">Shyyko Serhiy</vendor>
+    <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
       This plugin provides ability to render Markdown files using githup API and preview result in WebView.</br>
