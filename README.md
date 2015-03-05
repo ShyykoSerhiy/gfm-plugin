@@ -1,2 +1,5 @@
 # gfm-plugin
-Github flavored markdown plugin for inteliij idea. 
+Github markdown plugin for intellij platform.
+
+
+This plugin uses slightly modified [Loboevolution](https://github.com/oswetto/Loboevolution) for rendering when javafx is not available.

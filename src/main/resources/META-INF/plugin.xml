@@ -1,0 +1,44 @@
+<idea-plugin version="2">
+    <id>com.github.shyykoserhiy.gfm</id>
+    <name>gfm</name>
+    <version>0.0.1</version>
+    <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy">Shyyko Serhiy</vendor>
+
+    <description><![CDATA[
+      This plugin provides ability to render Markdown files using githup API and preview result in WebView.</br>
+        It uses <a href="https://github.com/oswetto/Loboevolution">https://github.com/oswetto/Loboevolution</a> as
+        fallback if javafx is not available.
+    ]]></description>
+
+    <change-notes><![CDATA[
+      0.0.1 Initial version.
+    ]]>
+    </change-notes>
+
+    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
+
+    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileEditorProvider implementation="com.github.shyykoserhiy.gfm.editor.GfmPreviewProvider"/>
+        <applicationService serviceInterface="com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings"
+                            serviceImplementation="com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings"/>
+        <applicationConfigurable instance="com.github.shyykoserhiy.gfm.settings.GfmGlobalSettingsConfigurable"/>
+    </extensions>
+
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
+
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+</idea-plugin>
