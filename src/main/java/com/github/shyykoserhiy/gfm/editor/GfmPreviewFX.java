@@ -17,6 +17,7 @@ import com.intellij.openapi.util.UserDataHolderBase;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -55,7 +56,13 @@ public class GfmPreviewFX extends UserDataHolderBase implements FileEditor {
             public void run() {
                 webView = new WebView();
                 webView.getEngine().setUserStyleSheetLocation(getClass().getResource("/com/github/shyykoserhiy/gfm/stylesheet/javafxstylesheet.css").toExternalForm());
-                jfxPanelRetina.setScene(new Scene(webView));
+                AnchorPane anchorPane = new AnchorPane();
+                AnchorPane.setTopAnchor(webView, 0.0);
+                AnchorPane.setBottomAnchor(webView, 0.0);
+                AnchorPane.setLeftAnchor(webView, 0.0);
+                AnchorPane.setRightAnchor(webView, 0.0);
+                anchorPane.getChildren().add(webView);
+                jfxPanelRetina.setScene(new Scene(anchorPane));
             }
         });
     }
