@@ -6,15 +6,22 @@
           href="{github.css}"/>
     <link rel="stylesheet"
           href="{github2.css}"/>
-    <style>
+    <style id="css-fixes">
         .repository-with-sidebar .repository-content {
-            float: right;
-        }
-        .page {
-            margin-top: 30px;
+            float: left;
         }
         #readme {
             width: 790px;
+        }
+        .container{
+            margin:0px;
+            margin-right:0px;
+            margin-left:0px;
+            width:790px;
+        }
+        body{
+            margin: 20px;
+            min-width: 790px;
         }
     </style>
 </head>
@@ -27,11 +34,11 @@
                     <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
                         <h3>
                             <span class="octicon octicon-book"></span>
-                            README.md
+                            {0}
                         </h3>
 
                         <div class="markdown-body entry-content">
-                            {0}
+                            {1}
                         </div>
                     </div>
                 </div>

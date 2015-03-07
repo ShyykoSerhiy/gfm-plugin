@@ -31,13 +31,13 @@ public class GfmPreviewProvider implements FileEditorProvider {
         if (jfxrt.exists()) {
             try {
                 ((PluginClassLoader) this.getClass().getClassLoader()).addURL(jfxrt.toURI().toURL());
-                fileEditor = new GfmPreviewFX(FileDocumentManager.getInstance().getDocument(virtualFile));
+                fileEditor = new GfmPreviewFX(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
         }
         if (fileEditor == null) {
-            fileEditor = new GfmPreviewLobo(FileDocumentManager.getInstance().getDocument(virtualFile));
+            fileEditor = new GfmPreviewLobo(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
         }
         return fileEditor;
     }

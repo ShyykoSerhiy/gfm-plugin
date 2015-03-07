@@ -14,7 +14,7 @@ import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.fileEditor.FileEditorStateLevel;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.UserDataHolderBase;
-import com.sun.org.apache.bcel.internal.classfile.JavaClass;
+import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lobobrowser.context.ClientletFactory;
@@ -34,9 +34,10 @@ public class GfmPreviewLobo extends UserDataHolderBase implements FileEditor {
     private final FramePanel webView;
     private GfmClient client;
     private boolean previewIsUpToDate = false;
+    private final VirtualFile markdownFile;
 
-
-    public GfmPreviewLobo(@NotNull Document document) {
+    public GfmPreviewLobo(@NotNull VirtualFile markdownFile, @NotNull Document document) {
+        this.markdownFile = markdownFile;
         this.document = document;
         this.client = new GfmClient(new RequestDoneListener());
 
@@ -105,7 +106,7 @@ public class GfmPreviewLobo extends UserDataHolderBase implements FileEditor {
     public void selectNotify() {
         if (!isPreviewIsUpToDate()) {
             setPreviewIsUpToDate(true);
-            this.client.queueMarkdownHtmlRequest(document.getText());
+            this.client.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
         }
     }
 
@@ -148,7 +149,7 @@ public class GfmPreviewLobo extends UserDataHolderBase implements FileEditor {
         Disposer.dispose(this);
     }
 
-    private class RequestDoneListener implements GfmRequestDoneListener{
+    private class RequestDoneListener implements GfmRequestDoneListener {
         @Override
         public void onRequestDone(final File result) {
             SwingUtilities.invokeLater(new Runnable() {
@@ -175,7 +176,7 @@ public class GfmPreviewLobo extends UserDataHolderBase implements FileEditor {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                if (fileWriter != null){
+                if (fileWriter != null) {
                     try {
                         fileWriter.close();
                     } catch (IOException e) {

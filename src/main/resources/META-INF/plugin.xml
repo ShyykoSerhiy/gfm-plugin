@@ -1,17 +1,20 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
-      This plugin provides ability to render Markdown files using githup API and preview result in WebView.</br>
+      This plugin provides ability to render Markdown files using github API and preview result in WebView.</br>
         It uses <a href="https://github.com/oswetto/Loboevolution">https://github.com/oswetto/Loboevolution</a> as
         fallback if javafx is not available.
     ]]></description>
 
     <change-notes><![CDATA[
-      0.0.2 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/1">https://github.com/ShyykoSerhiy/gfm-plugin/issues/1</a>
+      0.0.3 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/4">https://github.com/ShyykoSerhiy/gfm-plugin/issues/4</a></br>
+            Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/2">https://github.com/ShyykoSerhiy/gfm-plugin/issues/2</a></br>
+            Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/3">https://github.com/ShyykoSerhiy/gfm-plugin/issues/3</a></br>
+      0.0.2 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/1">https://github.com/ShyykoSerhiy/gfm-plugin/issues/1</a></br>
       0.0.1 Initial version.
     ]]>
     </change-notes>

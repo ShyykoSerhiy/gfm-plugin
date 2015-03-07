@@ -2,7 +2,6 @@ package com.github.shyykoserhiy.gfm.network;
 
 import com.github.shyykoserhiy.gfm.GfmBundle;
 import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
-import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettingsChangedListener;
 import com.github.shyykoserhiy.gfm.template.TemplateManager;
 import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -23,10 +22,8 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class GfmClient {//access_token=044b1a8187baccdc6315b849e8d461c13480b73d
+public class GfmClient {
     private ExecutorService connectionsThreadPool = Executors.newSingleThreadExecutor();
-    private int connectionTimeout = 5000;//todo settings
-    private int socketTimeout = 5000; //todo settings
 
     private GfmGlobalSettings globalSettings;
     private CloseableHttpClient httpClient;
@@ -40,14 +37,16 @@ public class GfmClient {//access_token=044b1a8187baccdc6315b849e8d461c13480b73d
         globalSettings = GfmGlobalSettings.getInstance();
     }
 
-    public void queueMarkdownHtmlRequest(String markdown) {
-        connectionsThreadPool.submit(new GfmWorker(markdown));
+    public void queueMarkdownHtmlRequest(String filename, String markdown) {
+        connectionsThreadPool.submit(new GfmWorker(filename, markdown));
     }
 
     private class GfmWorker implements Runnable {
+        private String filename;
         private String markdown;
 
-        public GfmWorker(String markdown) {
+        public GfmWorker(String filename, String markdown) {
+            this.filename = filename;
             this.markdown = markdown;
         }
 
@@ -72,7 +71,7 @@ public class GfmClient {//access_token=044b1a8187baccdc6315b849e8d461c13480b73d
                 String responseString = EntityUtils.toString(entity);
                 switch (response.getStatusLine().getStatusCode()) {
                     case 200:
-                        String responseText = templateManager.getMarkdownHtml(responseString);
+                        String responseText = templateManager.getMarkdownHtml(filename, responseString);
                         File file = File.createTempFile("markdown", ".html"); //todo
                         FileWriter fileWriter = new FileWriter(file);
                         fileWriter.write(responseText);

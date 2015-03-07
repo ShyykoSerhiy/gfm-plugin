@@ -14,9 +14,11 @@ import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.fileEditor.FileEditorStateLevel;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.UserDataHolderBase;
+import com.intellij.openapi.vfs.VirtualFile;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,8 +36,10 @@ public class GfmPreviewFX extends UserDataHolderBase implements FileEditor {
     private GfmClient client;
     private boolean previewIsUpToDate = false;
     private final JFXPanelRetina jfxPanelRetina;
+    private final VirtualFile markdownFile;
 
-    public GfmPreviewFX(@NotNull Document document) {
+    public GfmPreviewFX(@NotNull VirtualFile markdownFile, @NotNull Document document) {
+        this.markdownFile = markdownFile;
         this.document = document;
         this.client = new GfmClient(new RequestDoneListener());
 
@@ -55,7 +59,13 @@ public class GfmPreviewFX extends UserDataHolderBase implements FileEditor {
             public void run() {
                 webView = new WebView();
                 webView.getEngine().setUserStyleSheetLocation(getClass().getResource("/com/github/shyykoserhiy/gfm/stylesheet/javafxstylesheet.css").toExternalForm());
-                jfxPanelRetina.setScene(new Scene(webView));
+                AnchorPane anchorPane = new AnchorPane();
+                AnchorPane.setTopAnchor(webView, 0.0);
+                AnchorPane.setBottomAnchor(webView, 0.0);
+                AnchorPane.setLeftAnchor(webView, 0.0);
+                AnchorPane.setRightAnchor(webView, 0.0);
+                anchorPane.getChildren().add(webView);
+                jfxPanelRetina.setScene(new Scene(anchorPane));
             }
         });
     }
@@ -113,7 +123,7 @@ public class GfmPreviewFX extends UserDataHolderBase implements FileEditor {
     public void selectNotify() {
         if (!isPreviewIsUpToDate()) {
             setPreviewIsUpToDate(true);
-            this.client.queueMarkdownHtmlRequest(document.getText());
+            this.client.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
         }
     }
 
@@ -179,7 +189,7 @@ public class GfmPreviewFX extends UserDataHolderBase implements FileEditor {
         });
     }
 
-    private void loadContent(final String content){
+    private void loadContent(final String content) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
