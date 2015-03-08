@@ -40,8 +40,8 @@ public class GfmPreviewProvider implements FileEditorProvider {
                 URL url = jfxrt.toURI().toURL();
                 if (!pluginClassLoader.getUrls().contains(url)) {
                     ((PluginClassLoader) this.getClass().getClassLoader()).addURL(url);
-                    fileEditor = new GfmPreviewFX(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
                 }
+                fileEditor = new GfmPreviewFX(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
