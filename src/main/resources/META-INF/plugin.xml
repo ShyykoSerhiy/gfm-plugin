@@ -5,7 +5,7 @@
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
-      This plugin provides ability to render Markdown files using github API and preview result in WebView.</br>
+      This plugin provides ability to render Markdown files using GitHub API and preview result in WebView.</br>
         It uses <a href="https://github.com/oswetto/Loboevolution">https://github.com/oswetto/Loboevolution</a> as
         fallback if javafx is not available.
     ]]></description>
