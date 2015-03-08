@@ -19,12 +19,14 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private static final String GITHUB_ACCESS_TOKEN = "githubAccessToken";
     private static final String CONNECTION_TIMEOUT = "connectionTimeout";
     private static final String SOCKET_TIMEOUT = "socketTimeout";
+    private static final String PREFER_LOBO = "preferLobo";
 
     private Set<WeakReference<GfmGlobalSettingsChangedListener>> listeners = new HashSet<WeakReference<GfmGlobalSettingsChangedListener>>();
 
     private String githubAccessToken = "";
     private int connectionTimeout = 2000;
     private int socketTimeout = 2000;
+    private boolean preferLobo = false;
 
     public static GfmGlobalSettings getInstance() {
         return ServiceManager.getService(GfmGlobalSettings.class);
@@ -63,6 +65,14 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         }
     }
 
+    public boolean isPreferLobo() {
+        return preferLobo;
+    }
+
+    public void setPreferLobo(boolean preferLobo) {
+        this.preferLobo = preferLobo;
+    }
+
     @Nullable
     @Override
     public Element getState() {
@@ -70,6 +80,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         element.setAttribute(GITHUB_ACCESS_TOKEN, githubAccessToken);
         element.setAttribute(CONNECTION_TIMEOUT, String.valueOf(connectionTimeout));
         element.setAttribute(SOCKET_TIMEOUT, String.valueOf(socketTimeout));
+        element.setAttribute(PREFER_LOBO, String.valueOf(preferLobo));
         return element;
     }
 
@@ -87,6 +98,10 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         if (socketTimeout != null) {
             this.socketTimeout = Integer.parseInt(socketTimeout);
         }
+        String preferLobo = state.getAttributeValue(PREFER_LOBO);
+        if (preferLobo != null) {
+            this.preferLobo = Boolean.valueOf(preferLobo);
+        }
         notifyListeners();
     }
 
@@ -97,7 +112,6 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
                 gfmGlobalSettingsChangedListener.onGfmGlobalSettingsChanged(this);
             }
         }
-
     }
 
 }

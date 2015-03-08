@@ -51,7 +51,8 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
     public boolean isModified() {
         return gfmGlobalSettings.getConnectionTimeout() != (Integer)gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().getValue() ||
                 gfmGlobalSettings.getSocketTimeout() != (Integer)gfmGlobalSettingsPanel.getSocketTimeoutSpinner().getValue() ||
-                !gfmGlobalSettings.getGithubAccessToken().equals(String.valueOf(gfmGlobalSettingsPanel.getGithubAccessTokenField().getPassword()));
+                !gfmGlobalSettings.getGithubAccessToken().equals(String.valueOf(gfmGlobalSettingsPanel.getGithubAccessTokenField().getPassword())) ||
+                gfmGlobalSettings.isPreferLobo() != gfmGlobalSettingsPanel.getPreferLoboCheckBox().isSelected();
     }
 
     @Override
@@ -59,6 +60,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettings.setGithubAccessToken(String.valueOf(gfmGlobalSettingsPanel.getGithubAccessTokenField().getPassword()));//todo not secure
         gfmGlobalSettings.setConnectionTimeout((Integer) gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().getValue());
         gfmGlobalSettings.setSocketTimeout((Integer) gfmGlobalSettingsPanel.getSocketTimeoutSpinner().getValue());
+        gfmGlobalSettings.setPreferLobo(gfmGlobalSettingsPanel.getPreferLoboCheckBox().isSelected());
     }
 
     @Override
@@ -66,6 +68,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettingsPanel.getGithubAccessTokenField().setText(gfmGlobalSettings.getGithubAccessToken());
         gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().setValue(gfmGlobalSettings.getConnectionTimeout());
         gfmGlobalSettingsPanel.getSocketTimeoutSpinner().setValue(gfmGlobalSettings.getSocketTimeout());
+        gfmGlobalSettingsPanel.getPreferLoboCheckBox().setSelected(gfmGlobalSettings.isPreferLobo());
     }
 
     @Override
