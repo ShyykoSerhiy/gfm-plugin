@@ -1,19 +1,9 @@
 package com.github.shyykoserhiy.gfm.editor;
 
 import com.github.shyykoserhiy.gfm.GfmBundle;
-import com.github.shyykoserhiy.gfm.network.GfmClient;
 import com.github.shyykoserhiy.gfm.network.GfmRequestDoneListener;
-import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
-import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.event.DocumentAdapter;
-import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.fileEditor.FileEditor;
-import com.intellij.openapi.fileEditor.FileEditorLocation;
-import com.intellij.openapi.fileEditor.FileEditorState;
-import com.intellij.openapi.fileEditor.FileEditorStateLevel;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -25,31 +15,16 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 
-public class GfmPreviewFX extends UserDataHolderBase implements FileEditor {
-    private Document document;
+public class GfmPreviewFX extends AbstractGfmPreview implements FileEditor {
 
     private final JPanel jPanel;
     private WebView webView;
-    private GfmClient client;
-    private boolean previewIsUpToDate = false;
     private final JFXPanelRetina jfxPanelRetina;
-    private final VirtualFile markdownFile;
 
     public GfmPreviewFX(@NotNull VirtualFile markdownFile, @NotNull Document document) {
-        this.markdownFile = markdownFile;
-        this.document = document;
-        this.client = new GfmClient(new RequestDoneListener());
-
-        // Listen to the document modifications.
-        this.document.addDocumentListener(new DocumentAdapter() {
-            @Override
-            public void documentChanged(DocumentEvent e) {
-                setPreviewIsUpToDate(false);
-            }
-        });
+        super(markdownFile, document);
         jPanel = new JPanel(new BorderLayout(), true);
         jfxPanelRetina = new JFXPanelRetina(); // initializing javafx
         jPanel.add(jfxPanelRetina, BorderLayout.CENTER);
@@ -88,96 +63,15 @@ public class GfmPreviewFX extends UserDataHolderBase implements FileEditor {
         return GfmBundle.message("gfm.editor.preview.tab-name-fx");
     }
 
-    @NotNull
-    @Override
-    public FileEditorState getState(@NotNull FileEditorStateLevel fileEditorStateLevel) {
-        return FileEditorState.INSTANCE;
-    }
-
-    @Override
-    public void setState(@NotNull FileEditorState fileEditorState) {
-    }
-
-    @Override
-    public boolean isModified() {
-        return false;
-    }
-
-    @Override
-    public boolean isValid() {
-        return document.getTextLength() != 0;
-    }
-
-    public boolean isPreviewIsUpToDate() {
-        return previewIsUpToDate;
-    }
-
-    public void setPreviewIsUpToDate(boolean previewIsUpToDate) {
-        this.previewIsUpToDate = previewIsUpToDate;
-    }
-
-    /**
-     * Invoked when the editor is selected.
-     */
-    @Override
-    public void selectNotify() {
-        if (!isPreviewIsUpToDate()) {
-            setPreviewIsUpToDate(true);
-            this.client.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
-        }
-    }
-
-    /**
-     * Invoked when the editor is deselected.
-     */
-    @Override
-    public void deselectNotify() {
-        //todo?
-    }
-
-    @Override
-    public void addPropertyChangeListener(@NotNull PropertyChangeListener propertyChangeListener) {
-    }
-
-    @Override
-    public void removePropertyChangeListener(@NotNull PropertyChangeListener propertyChangeListener) {
-    }
-
-    @Nullable
-    @Override
-    public BackgroundEditorHighlighter getBackgroundHighlighter() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public FileEditorLocation getCurrentLocation() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public StructureViewBuilder getStructureViewBuilder() {
-        return null;
-    }
-
     @Override
     public void dispose() {
-        Disposer.dispose(this);
+        super.dispose();
         jfxPanelRetina.removeNotify(); //fixme @see com.github.shyykoserhiy.gfm.editor.GfmPreviewFX.JFXPanelRetina.removeNotify()
     }
 
-    private class RequestDoneListener implements GfmRequestDoneListener {
-        @Override
-        public void onRequestDone(final File result) {
-            loadFile(result);
-        }
-
-        @Override
-        public void onRequestFail(String error) {
-            setPreviewIsUpToDate(false);
-            loadContent(error);
-        }
+    @Override
+    protected GfmRequestDoneListener getRequestDoneListener() {
+        return new RequestDoneListener();
     }
 
     private void loadFile(final File file) {
@@ -217,6 +111,19 @@ public class GfmPreviewFX extends UserDataHolderBase implements FileEditor {
             }
 
             super.removeNotify();*/
+        }
+    }
+
+    private class RequestDoneListener implements GfmRequestDoneListener {
+        @Override
+        public void onRequestDone(final File result) {
+            loadFile(result);
+        }
+
+        @Override
+        public void onRequestFail(String error) {
+            previewIsUpToDate = false;
+            loadContent(error);
         }
     }
 }
