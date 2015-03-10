@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -11,10 +11,14 @@
     ]]></description>
 
     <change-notes><![CDATA[
-      0.0.3 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/4">https://github.com/ShyykoSerhiy/gfm-plugin/issues/4</a></br>
-            Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/2">https://github.com/ShyykoSerhiy/gfm-plugin/issues/2</a></br>
-            Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/3">https://github.com/ShyykoSerhiy/gfm-plugin/issues/3</a></br>
-      0.0.2 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/1">https://github.com/ShyykoSerhiy/gfm-plugin/issues/1</a></br>
+      0.0.4 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/9">Preview is not updated after external document change.</a></br>
+            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/6">Add a way to reload preview (button, hotkey).</a></br>
+            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/13">Refactor GfmPreviewXXX to extend AbstractGfmPreview.</a></br>
+            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/10">Add to settings ability to prefer Lobo over JFX as more lightweight solution.</a></br>
+      0.0.3 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/4">Preview is cut when preview window is small.</a></br>
+            Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/2">Header is always README.md.</a></br>
+            Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/3">Css styles not render if plugin is deployed as jar file.</a></br>
+      0.0.2 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/1">Css styles not applied(github removed css from cdn)</a></br>
       0.0.1 Initial version.
     ]]>
     </change-notes>
@@ -43,6 +47,11 @@
 
     <actions>
         <!-- Add your actions here -->
+        <action id="ReloadGfmPreviewAction" class="com.github.shyykoserhiy.gfm.actions.ReloadGfmPreviewAction"
+                text="Reload gfm preview" description="Reloads gfm preview in current active gfm preview form.">
+            <add-to-group group-id="ToolsMenu"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt R"/>
+        </action>
     </actions>
 
 </idea-plugin>
