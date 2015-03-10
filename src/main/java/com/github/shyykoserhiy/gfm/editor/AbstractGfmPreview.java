@@ -22,6 +22,7 @@ import java.beans.PropertyChangeListener;
 @SuppressWarnings("unused")
 public abstract class AbstractGfmPreview extends UserDataHolderBase implements Disposable {
     protected boolean previewIsUpToDate = false;
+    protected boolean previewIsSelected = false;
 
     private Document document;
     private GfmClient client;
@@ -37,6 +38,9 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
             @Override
             public void documentChanged(DocumentEvent e) {
                 previewIsUpToDate = false;
+                if (previewIsSelected) {
+                    selectNotify();
+                }
             }
         });
     }
@@ -62,6 +66,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
      * Invoked when the editor is selected.
      */
     public void selectNotify() {
+        previewIsSelected = true;
         if (!previewIsUpToDate) {
             previewIsUpToDate = true; //todo
             this.client.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
@@ -72,7 +77,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
      * Invoked when the editor is deselected.
      */
     public void deselectNotify() {
-        //empty
+        previewIsSelected = false;
     }
 
     public void addPropertyChangeListener(@NotNull PropertyChangeListener propertyChangeListener) {
