@@ -2,6 +2,7 @@ package com.github.shyykoserhiy.gfm.editor;
 
 import com.github.shyykoserhiy.gfm.GfmBundle;
 import com.github.shyykoserhiy.gfm.file.MarkdownFile;
+import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
 import com.intellij.ide.plugins.cl.PluginClassLoader;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 public class GfmPreviewProvider implements FileEditorProvider {
     private static final String EDITOR_TYPE_ID = GfmBundle.message("gfm.editor.type");
@@ -25,12 +27,20 @@ public class GfmPreviewProvider implements FileEditorProvider {
     @NotNull
     @Override
     public FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile virtualFile) {
+        if (GfmGlobalSettings.getInstance().isPreferLobo()) {
+            return new GfmPreviewLobo(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
+        }
+
         String javaHome = System.getProperty("java.home");
         File jfxrt = new File(FileUtil.join(javaHome, "lib", "ext", "jfxrt.jar"));
         FileEditor fileEditor = null;
         if (jfxrt.exists()) {
             try {
-                ((PluginClassLoader) this.getClass().getClassLoader()).addURL(jfxrt.toURI().toURL());
+                PluginClassLoader pluginClassLoader = (PluginClassLoader) this.getClass().getClassLoader();
+                URL url = jfxrt.toURI().toURL();
+                if (!pluginClassLoader.getUrls().contains(url)) {
+                    ((PluginClassLoader) this.getClass().getClassLoader()).addURL(url);
+                }
                 fileEditor = new GfmPreviewFX(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
