@@ -68,8 +68,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     public void selectNotify() {
         previewIsSelected = true;
         if (!previewIsUpToDate) {
-            previewIsUpToDate = true; //todo
-            this.client.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
+            updatePreview();
         }
     }
 
@@ -106,6 +105,18 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     @Override
     public void dispose() {
         Disposer.dispose(this);
+    }
+
+    /**
+     * Updates preview ignoring com.github.shyykoserhiy.gfm.editor.AbstractGfmPreview#previewIsUpToDate value
+     */
+    public void updatePreview() {
+        previewIsUpToDate = true; //todo
+        this.client.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
+    }
+
+    public boolean isPreviewIsSelected() {
+        return previewIsSelected;
     }
 
     protected abstract GfmRequestDoneListener getRequestDoneListener();
