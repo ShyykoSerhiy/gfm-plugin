@@ -80,6 +80,7 @@ public class GfmClient {
                         break;
                     case 403:
                         fireFail(GfmBundle.message("gfm.error.github-rate-limit"), responseString);
+                        break;
                     default:
                         fireFail(GfmBundle.message("gfm.error.github-unknown"), responseString);
                 }
