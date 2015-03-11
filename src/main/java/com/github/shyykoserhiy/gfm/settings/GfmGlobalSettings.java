@@ -1,9 +1,6 @@
 package com.github.shyykoserhiy.gfm.settings;
 
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.components.*;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,7 +10,7 @@ import java.util.Set;
 
 @State(
         name = "GfmSettings",
-        storages = @Storage(id = "gfm", file = "$APP_CONFIG/gfm.xml")
+        storages = @Storage(id = "gfm", file = StoragePathMacros.APP_CONFIG + "/gfm.xml")
 )
 public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private static final String GITHUB_ACCESS_TOKEN = "githubAccessToken";

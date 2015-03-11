@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -11,6 +11,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      0.0.5 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/16">"java.io.IOException: $APP_CONFIG not found" when IntelliJ looses focus.</a></br>
       0.0.4 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/9">Preview is not updated after external document change.</a></br>
             Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/6">Add a way to reload preview (button, hotkey).</a></br>
             Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/13">Refactor GfmPreviewXXX to extend AbstractGfmPreview.</a></br>
