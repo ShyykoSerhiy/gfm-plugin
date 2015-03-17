@@ -12,6 +12,8 @@ public class GfmGlobalSettingsPanel {
     private JSpinner socketTimeoutSpinner;
     private JLabel preferLoboLabel;
     private JCheckBox preferLoboCheckBox;
+    private JCheckBox useOfflineCheckBox;
+    private JLabel useOfflineLabel;
 
     public JPanel getPanel() {
         return panel;
@@ -31,6 +33,10 @@ public class GfmGlobalSettingsPanel {
 
     public JCheckBox getPreferLoboCheckBox() {
         return preferLoboCheckBox;
+    }
+
+    public JCheckBox getUseOfflineCheckBox() {
+        return useOfflineCheckBox;
     }
 
     private void createUIComponents() {

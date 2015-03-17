@@ -1,7 +1,11 @@
 package com.github.shyykoserhiy.gfm.editor;
 
+import com.github.shyykoserhiy.gfm.markdown.AbstractMarkdownParser;
 import com.github.shyykoserhiy.gfm.markdown.network.GitHubApiMarkdownParser;
 import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
+import com.github.shyykoserhiy.gfm.markdown.offline.JnaMarkdownParser;
+import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
+import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettingsChangedListener;
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.openapi.Disposable;
@@ -25,13 +29,13 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     protected boolean previewIsSelected = false;
 
     private Document document;
-    private GitHubApiMarkdownParser client;
+    private AbstractMarkdownParser markdownParser;
     private final VirtualFile markdownFile;
 
     public AbstractGfmPreview(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         this.markdownFile = markdownFile;
         this.document = document;
-        this.client = new GitHubApiMarkdownParser(getRequestDoneListener());
+        updateMarkdownParser(GfmGlobalSettings.getInstance());
 
         // Listen to the document modifications.
         this.document.addDocumentListener(new DocumentAdapter() {
@@ -41,6 +45,13 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
                 //if (previewIsSelected) {
                     selectNotify();
                 //}
+            }
+        });
+
+        GfmGlobalSettings.getInstance().addGlobalSettingsChangedListener(new GfmGlobalSettingsChangedListener() {
+            @Override
+            public void onGfmGlobalSettingsChanged(GfmGlobalSettings newGfmGlobalSettings) {
+                updateMarkdownParser(newGfmGlobalSettings);
             }
         });
     }
@@ -112,7 +123,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
      */
     public void updatePreview() {
         previewIsUpToDate = true; //todo
-        this.client.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
+        this.markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
     }
 
     public boolean isPreviewIsSelected() {
@@ -120,4 +131,12 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     }
 
     protected abstract GfmRequestDoneListener getRequestDoneListener();
+
+    private void updateMarkdownParser(GfmGlobalSettings gfmGlobalSettings) {
+        if (gfmGlobalSettings.isUseOffline() && JnaMarkdownParser.isSupported()) { //todo? some kind of message. On change in settings window will be better.
+            markdownParser = new JnaMarkdownParser(getRequestDoneListener());
+        } else {
+            markdownParser = new GitHubApiMarkdownParser(getRequestDoneListener());
+        }
+    }
 }
