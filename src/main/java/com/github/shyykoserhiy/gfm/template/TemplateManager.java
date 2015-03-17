@@ -1,16 +1,12 @@
 package com.github.shyykoserhiy.gfm.template;
 
-import com.intellij.openapi.application.PathManager;
+import com.github.shyykoserhiy.gfm.resource.ResourceUnzip;
 import com.intellij.openapi.util.io.FileUtil;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class TemplateManager {
     private static class Holder{
@@ -21,7 +17,7 @@ public class TemplateManager {
     private final Template errorTemplate;
 
     private TemplateManager() {
-        File outputFile = unzipResources();
+        File outputFile = new ResourceUnzip().unzipResources("/com/github/shyykoserhiy/gfm/html/css.zip");
         HashMap<String, Object> markdownParams = new HashMap<String, Object>();
         URL githubCss;
         URL githubCss2;
@@ -47,50 +43,10 @@ public class TemplateManager {
      * @return markdown html
      */
     public String getMarkdownHtml(String filename, String gfm){
-        return markdownTemplate.applyTemplate(filename, gfm);//.replace("data-canonical-src", "scr");
+        return markdownTemplate.applyTemplate(filename, gfm);
     }
 
     public String getErrorHtml(String errorMessage, String stackTrace){
         return errorTemplate.applyTemplate(errorMessage, stackTrace);
-    }
-
-    private File unzipResources(){
-        byte[] buffer = new byte[1024];
-        File folder = new File(FileUtil.join(PathManager.getPluginsPath(), "gfm-plugin"));
-        try{
-            //create output directory is not exists
-            if(!folder.exists()){
-                folder.mkdir();
-            }
-            //get the zip file content
-            ZipInputStream zis =
-                    new ZipInputStream(getClass().getResourceAsStream("/com/github/shyykoserhiy/gfm/html/css.zip"));
-            //get the zipped file list entry
-            ZipEntry ze = zis.getNextEntry();
-            while(ze!=null){
-                String fileName = ze.getName();
-                File newFile = new File(folder + File.separator + fileName);
-                //create all non exists folders
-                new File(newFile.getParent()).mkdirs();
-                if (!ze.isDirectory()){
-                    FileOutputStream fos = new FileOutputStream(newFile);
-
-                    int len;
-                    while ((len = zis.read(buffer)) > 0) {
-                        fos.write(buffer, 0, len);
-                    }
-                    fos.close();
-                } else {
-                    newFile.mkdir();
-                }
-                ze = zis.getNextEntry();
-            }
-
-            zis.closeEntry();
-            zis.close();
-        }catch(IOException ex){
-            ex.printStackTrace(); //todo
-        }
-        return folder;
     }
 }
