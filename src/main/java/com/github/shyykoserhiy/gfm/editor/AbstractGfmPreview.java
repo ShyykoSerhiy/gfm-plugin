@@ -1,7 +1,7 @@
 package com.github.shyykoserhiy.gfm.editor;
 
-import com.github.shyykoserhiy.gfm.network.GfmClient;
-import com.github.shyykoserhiy.gfm.network.GfmRequestDoneListener;
+import com.github.shyykoserhiy.gfm.markdown.network.GfmClient;
+import com.github.shyykoserhiy.gfm.markdown.network.GfmRequestDoneListener;
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.openapi.Disposable;
@@ -38,9 +38,9 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
             @Override
             public void documentChanged(DocumentEvent e) {
                 previewIsUpToDate = false;
-                if (previewIsSelected) {
+                //if (previewIsSelected) {
                     selectNotify();
-                }
+                //}
             }
         });
     }
