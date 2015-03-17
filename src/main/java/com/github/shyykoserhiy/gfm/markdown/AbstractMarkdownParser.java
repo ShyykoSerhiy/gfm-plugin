@@ -3,6 +3,9 @@ package com.github.shyykoserhiy.gfm.markdown;
 import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
 import com.github.shyykoserhiy.gfm.template.TemplateManager;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,6 +40,15 @@ public abstract class AbstractMarkdownParser {
 
         protected void fireFail(String message, String stackTrace) {
             requestDoneListener.onRequestFail(templateManager.getErrorHtml(message, stackTrace));
+        }
+
+        protected void fireSuccess(String html) throws IOException {
+            String responseText = templateManager.getMarkdownHtml(filename, html);
+            File file = File.createTempFile("markdown", ".html"); //todo get rid of files (Fix Lobo to accept Strings?)
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(responseText);
+            fileWriter.close();
+            requestDoneListener.onRequestDone(file);
         }
     }
 }

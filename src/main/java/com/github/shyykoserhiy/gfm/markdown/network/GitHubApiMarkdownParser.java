@@ -59,12 +59,7 @@ public class GitHubApiMarkdownParser extends AbstractMarkdownParser {
                 String responseString = EntityUtils.toString(entity);
                 switch (response.getStatusLine().getStatusCode()) {
                     case 200:
-                        String responseText = templateManager.getMarkdownHtml(filename, responseString);
-                        File file = File.createTempFile("markdown", ".html"); //todo
-                        FileWriter fileWriter = new FileWriter(file);
-                        fileWriter.write(responseText);
-                        fileWriter.close();
-                        requestDoneListener.onRequestDone(file);
+                        fireSuccess(responseString);
                         break;
                     case 403:
                         fireFail(GfmBundle.message("gfm.error.github-rate-limit"), responseString);
