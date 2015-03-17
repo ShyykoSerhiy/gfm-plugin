@@ -1,4 +1,4 @@
-package com.github.shyykoserhiy.gfm.markdown.network;
+package com.github.shyykoserhiy.gfm.markdown;
 
 import java.io.File;
 

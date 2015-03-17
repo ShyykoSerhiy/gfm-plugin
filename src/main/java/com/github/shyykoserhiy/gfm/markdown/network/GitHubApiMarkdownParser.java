@@ -1,8 +1,8 @@
 package com.github.shyykoserhiy.gfm.markdown.network;
 
 import com.github.shyykoserhiy.gfm.GfmBundle;
-import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
-import com.github.shyykoserhiy.gfm.template.TemplateManager;
+import com.github.shyykoserhiy.gfm.markdown.AbstractMarkdownParser;
+import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
 import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.http.HttpEntity;
@@ -19,35 +19,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class GfmClient {
-    private ExecutorService connectionsThreadPool = Executors.newSingleThreadExecutor();
-
-    private GfmGlobalSettings globalSettings;
+public class GitHubApiMarkdownParser extends AbstractMarkdownParser {
     private CloseableHttpClient httpClient;
-    private GfmRequestDoneListener requestDoneListener;
-    private TemplateManager templateManager;
 
-    public GfmClient(GfmRequestDoneListener requestDoneListener) {
-        this.requestDoneListener = requestDoneListener;
+    public GitHubApiMarkdownParser(GfmRequestDoneListener requestDoneListener) {
+        super(requestDoneListener);
         httpClient = HttpClients.createDefault();
-        templateManager = TemplateManager.getInstance();
-        globalSettings = GfmGlobalSettings.getInstance();
     }
 
-    public void queueMarkdownHtmlRequest(String filename, String markdown) {
-        connectionsThreadPool.submit(new GfmWorker(filename, markdown));
+    @Override
+    public AbstractMarkdownParser.GfmWorker getWorker(String filename, String markdown) {
+        return new GfmWorker(filename, markdown);
     }
 
-    private class GfmWorker implements Runnable {
-        private String filename;
-        private String markdown;
-
+    private class GfmWorker extends AbstractMarkdownParser.GfmWorker {
         public GfmWorker(String filename, String markdown) {
-            this.filename = filename;
-            this.markdown = markdown;
+            super(filename, markdown);
         }
 
         @Override
@@ -101,10 +89,6 @@ public class GfmClient {
                     }
                 }
             }
-        }
-
-        private void fireFail(String message, String stackTrace) {
-            requestDoneListener.onRequestFail(templateManager.getErrorHtml(message, stackTrace));
         }
     }
 }

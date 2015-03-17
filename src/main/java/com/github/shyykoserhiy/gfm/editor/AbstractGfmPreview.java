@@ -1,7 +1,7 @@
 package com.github.shyykoserhiy.gfm.editor;
 
-import com.github.shyykoserhiy.gfm.markdown.network.GfmClient;
-import com.github.shyykoserhiy.gfm.markdown.network.GfmRequestDoneListener;
+import com.github.shyykoserhiy.gfm.markdown.network.GitHubApiMarkdownParser;
+import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.openapi.Disposable;
@@ -25,13 +25,13 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     protected boolean previewIsSelected = false;
 
     private Document document;
-    private GfmClient client;
+    private GitHubApiMarkdownParser client;
     private final VirtualFile markdownFile;
 
     public AbstractGfmPreview(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         this.markdownFile = markdownFile;
         this.document = document;
-        this.client = new GfmClient(getRequestDoneListener());
+        this.client = new GitHubApiMarkdownParser(getRequestDoneListener());
 
         // Listen to the document modifications.
         this.document.addDocumentListener(new DocumentAdapter() {
