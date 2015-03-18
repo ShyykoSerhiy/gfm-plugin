@@ -4,7 +4,6 @@ import com.intellij.openapi.components.*;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.ref.WeakReference;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,13 +16,15 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private static final String CONNECTION_TIMEOUT = "connectionTimeout";
     private static final String SOCKET_TIMEOUT = "socketTimeout";
     private static final String PREFER_LOBO = "preferLobo";
+    private static final String USE_OFFLINE = "useOffline";
 
-    private Set<WeakReference<GfmGlobalSettingsChangedListener>> listeners = new HashSet<WeakReference<GfmGlobalSettingsChangedListener>>();
+    private Set<GfmGlobalSettingsChangedListener> listeners = new HashSet<GfmGlobalSettingsChangedListener>();
 
     private String githubAccessToken = "";
     private int connectionTimeout = 2000;
     private int socketTimeout = 2000;
     private boolean preferLobo = false;
+    private boolean useOffline = true;
 
     public static GfmGlobalSettings getInstance() {
         return ServiceManager.getService(GfmGlobalSettings.class);
@@ -67,7 +68,21 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     }
 
     public void setPreferLobo(boolean preferLobo) {
-        this.preferLobo = preferLobo;
+        if (this.preferLobo != preferLobo) {
+            this.preferLobo = preferLobo;
+            notifyListeners();
+        }
+    }
+
+    public void setUseOffline(boolean useOffline) {
+        if (this.useOffline != useOffline) {
+            this.useOffline = useOffline;
+            notifyListeners();
+        }
+    }
+
+    public boolean isUseOffline() {
+        return useOffline;
     }
 
     @Nullable
@@ -78,6 +93,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         element.setAttribute(CONNECTION_TIMEOUT, String.valueOf(connectionTimeout));
         element.setAttribute(SOCKET_TIMEOUT, String.valueOf(socketTimeout));
         element.setAttribute(PREFER_LOBO, String.valueOf(preferLobo));
+        element.setAttribute(USE_OFFLINE, String.valueOf(useOffline));
         return element;
     }
 
@@ -99,14 +115,21 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         if (preferLobo != null) {
             this.preferLobo = Boolean.valueOf(preferLobo);
         }
+        String useOffline = state.getAttributeValue(USE_OFFLINE);
+        if (useOffline != null) {
+            this.useOffline = Boolean.valueOf(useOffline);
+        }
         notifyListeners();
     }
 
-    public void notifyListeners(){
-        for (WeakReference<GfmGlobalSettingsChangedListener> listener : this.listeners) {
-            GfmGlobalSettingsChangedListener gfmGlobalSettingsChangedListener = listener.get();
-            if (gfmGlobalSettingsChangedListener != null){
-                gfmGlobalSettingsChangedListener.onGfmGlobalSettingsChanged(this);
+    public void addGlobalSettingsChangedListener(GfmGlobalSettingsChangedListener gfmGlobalSettingsChangedListener) {
+        listeners.add(gfmGlobalSettingsChangedListener);
+    }
+
+    public void notifyListeners() {
+        for (GfmGlobalSettingsChangedListener listener : this.listeners) {
+            if (listener != null) {
+                listener.onGfmGlobalSettingsChanged(this);
             }
         }
     }

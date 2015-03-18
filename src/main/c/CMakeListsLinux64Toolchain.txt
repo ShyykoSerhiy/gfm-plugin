@@ -1,0 +1,6 @@
+#-DCMAKE_TOOLCHAIN_FILE=CMakeListsLinux64Toolchain.txt
+SET(CMAKE_SYSTEM_NAME Linux)
+
+# specify the cross compiler
+SET(CMAKE_C_COMPILER   /usr/local/gcc-4.8.1-for-linux64/bin/x86_64-pc-linux-gcc)
+SET(CMAKE_CXX_COMPILER /usr/local/gcc-4.8.1-for-linux64/bin/x86_64-pc-linux-g++)

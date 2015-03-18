@@ -1,7 +1,7 @@
 package com.github.shyykoserhiy.gfm.editor;
 
 import com.github.shyykoserhiy.gfm.GfmBundle;
-import com.github.shyykoserhiy.gfm.network.GfmRequestDoneListener;
+import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -43,6 +43,11 @@ public class GfmPreviewFX extends AbstractGfmPreview implements FileEditor {
                 jfxPanelRetina.setScene(new Scene(anchorPane));
             }
         });
+    }
+
+    @Override
+    public boolean isImmediateUpdate() {
+        return true;
     }
 
     @NotNull

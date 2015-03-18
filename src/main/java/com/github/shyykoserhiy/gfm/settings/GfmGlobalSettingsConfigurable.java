@@ -52,7 +52,8 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         return gfmGlobalSettings.getConnectionTimeout() != (Integer)gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().getValue() ||
                 gfmGlobalSettings.getSocketTimeout() != (Integer)gfmGlobalSettingsPanel.getSocketTimeoutSpinner().getValue() ||
                 !gfmGlobalSettings.getGithubAccessToken().equals(String.valueOf(gfmGlobalSettingsPanel.getGithubAccessTokenField().getPassword())) ||
-                gfmGlobalSettings.isPreferLobo() != gfmGlobalSettingsPanel.getPreferLoboCheckBox().isSelected();
+                gfmGlobalSettings.isPreferLobo() != gfmGlobalSettingsPanel.getPreferLoboCheckBox().isSelected() ||
+                gfmGlobalSettings.isUseOffline() != gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected();
     }
 
     @Override
@@ -61,6 +62,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettings.setConnectionTimeout((Integer) gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().getValue());
         gfmGlobalSettings.setSocketTimeout((Integer) gfmGlobalSettingsPanel.getSocketTimeoutSpinner().getValue());
         gfmGlobalSettings.setPreferLobo(gfmGlobalSettingsPanel.getPreferLoboCheckBox().isSelected());
+        gfmGlobalSettings.setUseOffline(gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected());
     }
 
     @Override
@@ -69,6 +71,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().setValue(gfmGlobalSettings.getConnectionTimeout());
         gfmGlobalSettingsPanel.getSocketTimeoutSpinner().setValue(gfmGlobalSettings.getSocketTimeout());
         gfmGlobalSettingsPanel.getPreferLoboCheckBox().setSelected(gfmGlobalSettings.isPreferLobo());
+        gfmGlobalSettingsPanel.getUseOfflineCheckBox().setSelected(gfmGlobalSettings.isUseOffline());
     }
 
     @Override
