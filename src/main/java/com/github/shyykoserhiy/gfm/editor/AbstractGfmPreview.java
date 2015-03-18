@@ -42,9 +42,9 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
             @Override
             public void documentChanged(DocumentEvent e) {
                 previewIsUpToDate = false;
-                //if (previewIsSelected) {
+                if (previewIsSelected || isImmediateUpdate()) {
                     selectNotify();
-                //}
+                }
             }
         });
 
@@ -71,6 +71,13 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
 
     public boolean isValid() {
         return document.getTextLength() != 0;
+    }
+
+    /**
+     * @return if preview should be updated even if it's not selected
+     */
+    public boolean isImmediateUpdate() {
+        return false;
     }
 
     /**

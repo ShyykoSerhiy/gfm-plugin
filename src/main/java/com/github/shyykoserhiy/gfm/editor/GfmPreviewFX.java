@@ -45,6 +45,11 @@ public class GfmPreviewFX extends AbstractGfmPreview implements FileEditor {
         });
     }
 
+    @Override
+    public boolean isImmediateUpdate() {
+        return true;
+    }
+
     @NotNull
     @Override
     public JComponent getComponent() {
