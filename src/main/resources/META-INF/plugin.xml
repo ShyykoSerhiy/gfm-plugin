@@ -1,16 +1,22 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
-      This plugin provides ability to render Markdown files using GitHub API and preview result in WebView.</br>
+      This plugin provides ability to render Markdown files using GitHub API(has offline support) and preview result in WebView.</br>
+        It can be used alongside with <a href="https://plugins.jetbrains.com/plugin/5970?pr=idea">Markdown</a> without problems.</br>
         It uses <a href="https://github.com/oswetto/Loboevolution">https://github.com/oswetto/Loboevolution</a> as
         fallback if javafx is not available.
     ]]></description>
 
     <change-notes><![CDATA[
+      0.0.6 Added offline generation(default). Minor bug fixes.
+            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/21">cross compile c markdown libraries</a></br>
+            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/22">add option to prefer offline generation all the time in settings</a></br>
+            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/5">Add offline generation</a></br>
+            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/19">Add offline generation using https://rubygems.org/gems/github-markdown.</a></br>
       0.0.5 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/16">"java.io.IOException: $APP_CONFIG not found" when IntelliJ looses focus.</a></br>
       0.0.4 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/9">Preview is not updated after external document change.</a></br>
             Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/6">Add a way to reload preview (button, hotkey).</a></br>
