@@ -1,5 +1,6 @@
 package com.github.shyykoserhiy.gfm.settings;
 
+import com.github.shyykoserhiy.gfm.editor.RenderingEngine;
 import com.intellij.openapi.components.*;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +16,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private static final String GITHUB_ACCESS_TOKEN = "githubAccessToken";
     private static final String CONNECTION_TIMEOUT = "connectionTimeout";
     private static final String SOCKET_TIMEOUT = "socketTimeout";
-    private static final String PREFER_LOBO = "preferLobo";
+    private static final String RENDERING_ENGINE = "renderingEngine";
     private static final String USE_OFFLINE = "useOffline";
 
     private Set<GfmGlobalSettingsChangedListener> listeners = new HashSet<GfmGlobalSettingsChangedListener>();
@@ -23,7 +24,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private String githubAccessToken = "";
     private int connectionTimeout = 2000;
     private int socketTimeout = 2000;
-    private boolean preferLobo = false;
+    private RenderingEngine renderingEngine = RenderingEngine.JX_BROWSER;
     private boolean useOffline = true;
 
     public static GfmGlobalSettings getInstance() {
@@ -63,13 +64,13 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         }
     }
 
-    public boolean isPreferLobo() {
-        return preferLobo;
+    public RenderingEngine getRenderingEngine() {
+        return renderingEngine;
     }
 
-    public void setPreferLobo(boolean preferLobo) {
-        if (this.preferLobo != preferLobo) {
-            this.preferLobo = preferLobo;
+    public void setRenderingEngine(RenderingEngine renderingEngine) {
+        if (renderingEngine != this.renderingEngine) {
+            this.renderingEngine = renderingEngine;
             notifyListeners();
         }
     }
@@ -92,7 +93,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         element.setAttribute(GITHUB_ACCESS_TOKEN, githubAccessToken);
         element.setAttribute(CONNECTION_TIMEOUT, String.valueOf(connectionTimeout));
         element.setAttribute(SOCKET_TIMEOUT, String.valueOf(socketTimeout));
-        element.setAttribute(PREFER_LOBO, String.valueOf(preferLobo));
+        element.setAttribute(RENDERING_ENGINE, String.valueOf(renderingEngine));
         element.setAttribute(USE_OFFLINE, String.valueOf(useOffline));
         return element;
     }
@@ -111,9 +112,9 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         if (socketTimeout != null) {
             this.socketTimeout = Integer.parseInt(socketTimeout);
         }
-        String preferLobo = state.getAttributeValue(PREFER_LOBO);
-        if (preferLobo != null) {
-            this.preferLobo = Boolean.valueOf(preferLobo);
+        String renderingEngine = state.getAttributeValue(RENDERING_ENGINE);
+        if (renderingEngine != null) {
+            this.renderingEngine = RenderingEngine.valueOf(renderingEngine);
         }
         String useOffline = state.getAttributeValue(USE_OFFLINE);
         if (useOffline != null) {

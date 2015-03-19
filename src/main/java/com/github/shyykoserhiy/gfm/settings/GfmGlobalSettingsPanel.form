@@ -26,6 +26,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <labelFor value="1644a"/>
           <text value="Github access token"/>
         </properties>
       </component>
@@ -34,6 +35,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <labelFor value="39a2a"/>
           <text value="Connection timeout"/>
         </properties>
       </component>
@@ -42,6 +44,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <labelFor value="8d384"/>
           <text value="Socket timeout"/>
         </properties>
       </component>
@@ -57,25 +60,14 @@
         </constraints>
         <properties/>
       </component>
-      <component id="ebfc5" class="javax.swing.JLabel" binding="preferLoboLabel">
+      <component id="ebfc5" class="javax.swing.JLabel" binding="renderingEngineLabel">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Prefer Lobo over JavaFX WebView"/>
-          <toolTipText value="If checked Lobo will be used even if JavaFX WebView is available"/>
-        </properties>
-      </component>
-      <component id="ab90a" class="javax.swing.JCheckBox" binding="preferLoboCheckBox" default-binding="true">
-        <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <enabled value="true"/>
-          <horizontalAlignment value="10"/>
-          <selected value="false"/>
-          <text value=""/>
-          <toolTipText value="If checked Lobo will be used even if JavaFX WebView is available"/>
+          <labelFor value="83874"/>
+          <text value="Rendering engine"/>
+          <toolTipText value="Which component will be used to render markdown."/>
         </properties>
       </component>
       <component id="526aa" class="javax.swing.JLabel" binding="useOfflineLabel">
@@ -97,6 +89,19 @@
           <selected value="true"/>
           <text value=""/>
           <toolTipText value="If checked offline generation will be used. Note that if platform is not supported GitHub API will be used."/>
+        </properties>
+      </component>
+      <component id="83874" class="javax.swing.JComboBox" binding="renderingEngineComboBox">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <editable value="false"/>
+          <model>
+            <item value="JxBrowser"/>
+            <item value="JavaFX WebView"/>
+            <item value="Loboevolution"/>
+          </model>
         </properties>
       </component>
     </children>

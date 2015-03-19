@@ -4,6 +4,7 @@ import com.github.shyykoserhiy.gfm.GfmBundle;
 import com.github.shyykoserhiy.gfm.file.MarkdownFile;
 import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
 import com.intellij.ide.plugins.cl.PluginClassLoader;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
@@ -27,27 +28,34 @@ public class GfmPreviewProvider implements FileEditorProvider {
     @NotNull
     @Override
     public FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile virtualFile) {
-        if (GfmGlobalSettings.getInstance().isPreferLobo()) {
-            return new GfmPreviewLobo(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
-        }
-
-        String javaHome = System.getProperty("java.home");
-        File jfxrt = new File(FileUtil.join(javaHome, "lib", "ext", "jfxrt.jar"));
         FileEditor fileEditor = null;
-        if (jfxrt.exists()) {
-            try {
-                PluginClassLoader pluginClassLoader = (PluginClassLoader) this.getClass().getClassLoader();
-                URL url = jfxrt.toURI().toURL();
-                if (!pluginClassLoader.getUrls().contains(url)) {
-                    ((PluginClassLoader) this.getClass().getClassLoader()).addURL(url);
+        Document document = FileDocumentManager.getInstance().getDocument(virtualFile);
+        switch (GfmGlobalSettings.getInstance().getRenderingEngine()) {
+            case JX_BROWSER:
+                fileEditor = new GfmPreviewJX(virtualFile, document);
+                break;
+            case FX_WEBVIEW:
+                String javaHome = System.getProperty("java.home");
+                File jfxrt = new File(FileUtil.join(javaHome, "lib", "ext", "jfxrt.jar"));
+                if (jfxrt.exists()) {
+                    try {
+                        PluginClassLoader pluginClassLoader = (PluginClassLoader) this.getClass().getClassLoader();
+                        URL url = jfxrt.toURI().toURL();
+                        if (!pluginClassLoader.getUrls().contains(url)) {
+                            ((PluginClassLoader) this.getClass().getClassLoader()).addURL(url);
+                        }
+                        fileEditor = new GfmPreviewFX(virtualFile, document);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
                 }
-                fileEditor = new GfmPreviewFX(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+                break;
+            case LOBOEVOLUTION:
+                fileEditor = new GfmPreviewLobo(virtualFile, document);
+                break;
         }
         if (fileEditor == null) {
-            fileEditor = new GfmPreviewLobo(virtualFile, FileDocumentManager.getInstance().getDocument(virtualFile));
+            fileEditor = new GfmPreviewJX(virtualFile, document); //todo show message that selected is not supported
         }
         return fileEditor;
     }

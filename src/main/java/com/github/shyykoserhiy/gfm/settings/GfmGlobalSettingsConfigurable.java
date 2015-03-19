@@ -52,7 +52,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         return gfmGlobalSettings.getConnectionTimeout() != (Integer)gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().getValue() ||
                 gfmGlobalSettings.getSocketTimeout() != (Integer)gfmGlobalSettingsPanel.getSocketTimeoutSpinner().getValue() ||
                 !gfmGlobalSettings.getGithubAccessToken().equals(String.valueOf(gfmGlobalSettingsPanel.getGithubAccessTokenField().getPassword())) ||
-                gfmGlobalSettings.isPreferLobo() != gfmGlobalSettingsPanel.getPreferLoboCheckBox().isSelected() ||
+                gfmGlobalSettings.getRenderingEngine() != gfmGlobalSettingsPanel.getRenderingEngine() ||
                 gfmGlobalSettings.isUseOffline() != gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected();
     }
 
@@ -61,7 +61,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettings.setGithubAccessToken(String.valueOf(gfmGlobalSettingsPanel.getGithubAccessTokenField().getPassword()));//todo not secure
         gfmGlobalSettings.setConnectionTimeout((Integer) gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().getValue());
         gfmGlobalSettings.setSocketTimeout((Integer) gfmGlobalSettingsPanel.getSocketTimeoutSpinner().getValue());
-        gfmGlobalSettings.setPreferLobo(gfmGlobalSettingsPanel.getPreferLoboCheckBox().isSelected());
+        gfmGlobalSettings.setRenderingEngine(gfmGlobalSettingsPanel.getRenderingEngine());
         gfmGlobalSettings.setUseOffline(gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected());
     }
 
@@ -70,7 +70,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettingsPanel.getGithubAccessTokenField().setText(gfmGlobalSettings.getGithubAccessToken());
         gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().setValue(gfmGlobalSettings.getConnectionTimeout());
         gfmGlobalSettingsPanel.getSocketTimeoutSpinner().setValue(gfmGlobalSettings.getSocketTimeout());
-        gfmGlobalSettingsPanel.getPreferLoboCheckBox().setSelected(gfmGlobalSettings.isPreferLobo());
+        gfmGlobalSettingsPanel.setRenderingEngine(gfmGlobalSettings.getRenderingEngine());
         gfmGlobalSettingsPanel.getUseOfflineCheckBox().setSelected(gfmGlobalSettings.isUseOffline());
     }
 

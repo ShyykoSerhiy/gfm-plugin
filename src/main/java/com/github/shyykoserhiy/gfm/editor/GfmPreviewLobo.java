@@ -3,7 +3,6 @@ package com.github.shyykoserhiy.gfm.editor;
 import com.github.shyykoserhiy.gfm.GfmBundle;
 import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-public class GfmPreviewLobo extends AbstractGfmPreview implements FileEditor {
+public class GfmPreviewLobo extends AbstractGfmPreview {
 
     private final FramePanel webView;
 
