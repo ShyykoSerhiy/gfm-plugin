@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -18,13 +18,20 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <p>
+        <b>0.1.1</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/27">Memory leak with JXBrowser (not
+                 disposed in GfmPreviewJX)</a>
+            </li>
+        </ul>
         <b>0.1.0</b>
         <ul>
             <li>
                 Added JxBrowser as more reliable rendering engine than Java FX WebView or Lobo.
             </li>
         </ul>
-        <p>
         <b>0.0.6</b>
         <ul>
             <li>
