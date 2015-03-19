@@ -49,6 +49,12 @@ public class GfmPreviewJX extends AbstractGfmPreview {
     }
 
     @Override
+    public void dispose() {
+        super.dispose();
+        webView.getBrowser().dispose();
+    }
+
+    @Override
     protected GfmRequestDoneListener getRequestDoneListener() {
         return new RequestDoneListener();
     }
