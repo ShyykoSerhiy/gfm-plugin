@@ -3,7 +3,6 @@ package com.github.shyykoserhiy.gfm.editor;
 import com.github.shyykoserhiy.gfm.GfmBundle;
 import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.vfs.VirtualFile;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -17,7 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-public class GfmPreviewFX extends AbstractGfmPreview implements FileEditor {
+public class GfmPreviewFX extends AbstractGfmPreview {
 
     private final JPanel jPanel;
     private WebView webView;

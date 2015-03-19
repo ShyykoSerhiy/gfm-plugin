@@ -1,8 +1,8 @@
 package com.github.shyykoserhiy.gfm.editor;
 
 import com.github.shyykoserhiy.gfm.markdown.AbstractMarkdownParser;
-import com.github.shyykoserhiy.gfm.markdown.network.GitHubApiMarkdownParser;
 import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
+import com.github.shyykoserhiy.gfm.markdown.network.GitHubApiMarkdownParser;
 import com.github.shyykoserhiy.gfm.markdown.offline.JnaMarkdownParser;
 import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
 import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettingsChangedListener;
@@ -12,6 +12,7 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
+import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.fileEditor.FileEditorStateLevel;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import java.beans.PropertyChangeListener;
 
 @SuppressWarnings("unused")
-public abstract class AbstractGfmPreview extends UserDataHolderBase implements Disposable {
+public abstract class AbstractGfmPreview extends UserDataHolderBase implements Disposable, FileEditor {
     protected boolean previewIsUpToDate = false;
     protected boolean previewIsSelected = false;
 
@@ -42,7 +43,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
             @Override
             public void documentChanged(DocumentEvent e) {
                 previewIsUpToDate = false;
-                if (previewIsSelected || isImmediateUpdate()) {
+                if (previewIsSelected || isImmediateUpdate()) {//todo offline only?
                     selectNotify();
                 }
             }

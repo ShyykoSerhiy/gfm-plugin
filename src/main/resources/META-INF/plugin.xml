@@ -1,32 +1,106 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.0.6</version>
+    <version>0.1.0</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
-      This plugin provides ability to render Markdown files using GitHub API(has offline support) and preview result in WebView.</br>
-        It can be used alongside with <a href="https://plugins.jetbrains.com/plugin/5970?pr=idea">Markdown</a> without problems.</br>
-        It uses <a href="https://github.com/oswetto/Loboevolution">https://github.com/oswetto/Loboevolution</a> as
-        fallback if javafx is not available.
+        <p>GitHub markdown plugin for intellij platform.</p>
+        <h3>Features</h3>
+        <ul>
+            <li>GitHub flavored preview.</li>
+            <li>Full offline support.</li>
+            <li>Plays well with other markdown plugins.</li>
+        </ul>
+        <h3>License</h3>
+        <p><a href="http://opensource.org/licenses/mit-license.php">MIT License</a>.</p>
+        <p>Many thanks to the <a href="http://www.teamdev.com">TeamDev</a> for providing a free license for <a href="http://www.teamdev.com/jxbrowser">JxBrowser</a>, an amazing lightweight Chromium-based Swing/JavaFX component.</p>
     ]]></description>
 
     <change-notes><![CDATA[
-      0.0.6 Added offline generation(default). Minor bug fixes.
-            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/21">cross compile c markdown libraries</a></br>
-            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/22">add option to prefer offline generation all the time in settings</a></br>
-            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/5">Add offline generation</a></br>
-            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/19">Add offline generation using https://rubygems.org/gems/github-markdown.</a></br>
-      0.0.5 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/16">"java.io.IOException: $APP_CONFIG not found" when IntelliJ looses focus.</a></br>
-      0.0.4 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/9">Preview is not updated after external document change.</a></br>
-            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/6">Add a way to reload preview (button, hotkey).</a></br>
-            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/13">Refactor GfmPreviewXXX to extend AbstractGfmPreview.</a></br>
-            Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/10">Add to settings ability to prefer Lobo over JFX as more lightweight solution.</a></br>
-      0.0.3 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/4">Preview is cut when preview window is small.</a></br>
-            Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/2">Header is always README.md.</a></br>
-            Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/3">Css styles not render if plugin is deployed as jar file.</a></br>
-      0.0.2 Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/1">Css styles not applied(github removed css from cdn)</a></br>
-      0.0.1 Initial version.
+        <b>0.1.0</b>
+        <ul>
+            <li>
+                Added JxBrowser as more reliable rendering engine than Java FX WebView or Lobo.
+            </li>
+        </ul>
+        <p>
+        <b>0.0.6</b>
+        <ul>
+            <li>
+                Added offline generation(default). Minor bug fixes.
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/21">cross compile c markdown
+                libraries</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/22">add option to prefer offline
+                generation
+                all the time in settings</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/5">Add offline generation</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/19">Add offline generation using
+                https://rubygems.org/gems/github-markdown.</a>
+            </li>
+        </ul>
+        <b>0.0.5</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/16">"java.io.IOException: $APP_CONFIG not
+                found" when IntelliJ looses focus.</a>
+            </li>
+        </ul>
+        <b>0.0.4</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/9">Preview is not updated after external
+                document change.</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/6">Add a way to reload preview (button,
+                hotkey).</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/13">Refactor GfmPreviewXXX to extend
+                AbstractGfmPreview.</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/10">Add to settings ability to prefer Lobo
+                over
+                JFX as more lightweight solution.</a>
+            </li>
+        </ul>
+        <b>0.0.3</b>
+        <ul>
+            <li> Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/4">Preview is cut when preview window is
+                small.</a>
+            </li>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/2">Header is always README.md.</a>
+            </li>
+            <li>
+                Fixed <a href="https</li>://github.com/ShyykoSerhiy/gfm-plugin/issues/3">Css styles not render if plugin is
+                deployed as jar file.</a>
+            </li>
+        </ul>
+        <b>0.0.2</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/1">Css styles not applied(github removed css
+                from cdn)</a>
+            </li>
+        </ul>
+        <b>0.0.1</b>
+        <ul>
+            <li>
+                Initial version.
+            </li>
+        </ul>
+        </p>
     ]]>
     </change-notes>
 
