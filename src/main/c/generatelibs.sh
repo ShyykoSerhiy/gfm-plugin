@@ -9,20 +9,19 @@ removeBuildFiles(){
 
 buildLib(){
     removeBuildFiles
-    rm -rf $3
-    mkdir $3
-    /Applications/CMake.app/Contents/bin/cmake -DCMAKE_TOOLCHAIN_FILE=$1 ./
+    rm -rf $2
+    mkdir $2
+    if [ -z "$3" ]; then
+        cmake ./
+    else
+        cmake -DCMAKE_TOOLCHAIN_FILE=$3 ./
+    fi
     make
-    cp $2 $3
+    cp $1 $2
     removeBuildFiles
 }
 
-buildLib CMakeListsWindowsToolchain.txt libmarkdown.dll ./win32
-buildLib CMakeListsLinux64Toolchain.txt libmarkdown.so ./linux64
-buildLib CMakeListsLinux32Toolchain.txt libmarkdown.so ./linux32
-#buildLib CMakeListsLinuxArmToolchain.txt libmarkdown.so ./linuxArm
-
-/Applications/CMake.app/Contents/bin/cmake ./
-make
-cp libmarkdown.dylib ./osx64
-removeBuildFiles
+buildLib libmarkdown.dll ./win32  CMakeListsWindowsToolchain.txt
+buildLib libmarkdown.so ./linux64 CMakeListsLinux64Toolchain.txt
+buildLib libmarkdown.so ./linux32 CMakeListsLinux32Toolchain.txt
+buildLib libmarkdown.dylib ./osx64
