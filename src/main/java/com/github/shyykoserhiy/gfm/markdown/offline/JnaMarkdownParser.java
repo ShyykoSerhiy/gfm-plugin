@@ -31,7 +31,11 @@ public class JnaMarkdownParser extends AbstractMarkdownParser {
             }
         }
         if (Platform.isWindows()) {
-            return FileUtil.join("win32", "libmarkdown.dll");
+            if (Platform.is64Bit()) {
+                return FileUtil.join("win64", "libmarkdown.dll");
+            } else {
+                return FileUtil.join("win32", "libmarkdown.dll");
+            }
         }
         return null;
     }

@@ -141,7 +141,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     protected abstract GfmRequestDoneListener getRequestDoneListener();
 
     private void updateMarkdownParser(GfmGlobalSettings gfmGlobalSettings) {
-        if (gfmGlobalSettings.isUseOffline() && JnaMarkdownParser.isSupported()) { //todo? some kind of message. On change in settings window will be better.
+        if (gfmGlobalSettings.isUseOffline() && JnaMarkdownParser.isSupported()) {
             markdownParser = new JnaMarkdownParser(getRequestDoneListener());
         } else {
             markdownParser = new GitHubApiMarkdownParser(getRequestDoneListener());

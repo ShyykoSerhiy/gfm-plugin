@@ -1,6 +1,7 @@
 package com.github.shyykoserhiy.gfm.settings;
 
 import com.github.shyykoserhiy.gfm.editor.RenderingEngine;
+import com.github.shyykoserhiy.gfm.markdown.offline.JnaMarkdownParser;
 import com.intellij.openapi.components.*;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +26,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private int connectionTimeout = 2000;
     private int socketTimeout = 2000;
     private RenderingEngine renderingEngine = RenderingEngine.JX_BROWSER;
-    private boolean useOffline = true;
+    private boolean useOffline = JnaMarkdownParser.isSupported();
 
     public static GfmGlobalSettings getInstance() {
         return ServiceManager.getService(GfmGlobalSettings.class);

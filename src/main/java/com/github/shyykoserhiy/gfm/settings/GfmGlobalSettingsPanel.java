@@ -1,6 +1,8 @@
 package com.github.shyykoserhiy.gfm.settings;
 
+import com.github.shyykoserhiy.gfm.GfmBundle;
 import com.github.shyykoserhiy.gfm.editor.RenderingEngine;
+import com.github.shyykoserhiy.gfm.markdown.offline.JnaMarkdownParser;
 
 import javax.swing.*;
 
@@ -17,6 +19,15 @@ public class GfmGlobalSettingsPanel {
     private JLabel useOfflineLabel;
     private JLabel renderingEngineLabel;
     private JComboBox renderingEngineComboBox;
+
+    public GfmGlobalSettingsPanel() {
+        if (!JnaMarkdownParser.isSupported()) {
+            useOfflineLabel.setText(useOfflineLabel.getText() + GfmBundle.message("gfm.offline.not-supported"));
+            useOfflineLabel.setEnabled(false);
+            useOfflineCheckBox.setEnabled(false);
+            useOfflineCheckBox.setSelected(false);
+        }
+    }
 
     public JPanel getPanel() {
         return panel;
