@@ -3,6 +3,9 @@ package com.github.shyykoserhiy.gfm.settings;
 import com.github.shyykoserhiy.gfm.editor.RenderingEngine;
 import com.github.shyykoserhiy.gfm.markdown.offline.JnaMarkdownParser;
 import com.intellij.openapi.components.*;
+import com.intellij.openapi.extensions.ExtensionPoint;
+import com.intellij.openapi.extensions.Extensions;
+import com.intellij.openapi.fileEditor.FileEditorProvider;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +22,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private static final String SOCKET_TIMEOUT = "socketTimeout";
     private static final String RENDERING_ENGINE = "renderingEngine";
     private static final String USE_OFFLINE = "useOffline";
+    private static final String REPLACE_PREVIEW_TAB = "replacePreviewTab";
 
     private Set<GfmGlobalSettingsChangedListener> listeners = new HashSet<GfmGlobalSettingsChangedListener>();
 
@@ -27,6 +31,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private int socketTimeout = 2000;
     private RenderingEngine renderingEngine = RenderingEngine.JX_BROWSER;
     private boolean useOffline = JnaMarkdownParser.isSupported();
+    private boolean replacePreviewTab = false;
 
     public static GfmGlobalSettings getInstance() {
         return ServiceManager.getService(GfmGlobalSettings.class);
@@ -87,6 +92,27 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         return useOffline;
     }
 
+    public boolean isReplacePreviewTab() {
+        return replacePreviewTab;
+    }
+
+    public void setReplacePreviewTab(boolean replacePreviewTab) {
+        if (this.replacePreviewTab != replacePreviewTab) {
+            this.replacePreviewTab = replacePreviewTab;
+            notifyListeners();
+        }
+        if (replacePreviewTab) {
+            ExtensionPoint<FileEditorProvider> extensionPoint = Extensions.getRootArea().getExtensionPoint(FileEditorProvider.EP_FILE_EDITOR_PROVIDER);
+            FileEditorProvider[] extensions = extensionPoint.getExtensions();
+            for (FileEditorProvider extension : extensions) {
+                if (extension.getEditorTypeId().equals("MarkdownPreviewEditor")) { //removing extension of Markdown
+                    extensionPoint.unregisterExtension(extension);
+                    break;
+                }
+            }
+        }
+    }
+
     @Nullable
     @Override
     public Element getState() {
@@ -96,6 +122,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         element.setAttribute(SOCKET_TIMEOUT, String.valueOf(socketTimeout));
         element.setAttribute(RENDERING_ENGINE, String.valueOf(renderingEngine));
         element.setAttribute(USE_OFFLINE, String.valueOf(useOffline));
+        element.setAttribute(REPLACE_PREVIEW_TAB, String.valueOf(replacePreviewTab));
         return element;
     }
 
@@ -103,23 +130,27 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     public void loadState(Element state) {
         String githubAccessToken = state.getAttributeValue(GITHUB_ACCESS_TOKEN);
         if (githubAccessToken != null) {
-            this.githubAccessToken = githubAccessToken;
+            setGithubAccessToken(githubAccessToken);
         }
         String connectionTimeout = state.getAttributeValue(CONNECTION_TIMEOUT);
         if (connectionTimeout != null) {
-            this.connectionTimeout = Integer.parseInt(connectionTimeout);
+            setConnectionTimeout(Integer.parseInt(connectionTimeout));
         }
         String socketTimeout = state.getAttributeValue(SOCKET_TIMEOUT);
         if (socketTimeout != null) {
-            this.socketTimeout = Integer.parseInt(socketTimeout);
+            setSocketTimeout(Integer.parseInt(socketTimeout));
         }
         String renderingEngine = state.getAttributeValue(RENDERING_ENGINE);
         if (renderingEngine != null) {
-            this.renderingEngine = RenderingEngine.valueOf(renderingEngine);
+            setRenderingEngine(RenderingEngine.valueOf(renderingEngine));
         }
         String useOffline = state.getAttributeValue(USE_OFFLINE);
         if (useOffline != null) {
-            this.useOffline = Boolean.valueOf(useOffline);
+            setUseOffline(Boolean.valueOf(useOffline));
+        }
+        String replacePreviewTab = state.getAttributeValue(REPLACE_PREVIEW_TAB);
+        if (replacePreviewTab != null) {
+            setReplacePreviewTab(Boolean.valueOf(replacePreviewTab));
         }
         notifyListeners();
     }
