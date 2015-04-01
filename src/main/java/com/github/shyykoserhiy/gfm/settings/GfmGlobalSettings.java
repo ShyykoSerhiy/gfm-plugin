@@ -2,10 +2,12 @@ package com.github.shyykoserhiy.gfm.settings;
 
 import com.github.shyykoserhiy.gfm.editor.RenderingEngine;
 import com.github.shyykoserhiy.gfm.markdown.offline.JnaMarkdownParser;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.extensions.ExtensionPoint;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.fileEditor.FileEditorProvider;
+import com.intellij.openapi.util.Disposer;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
@@ -155,7 +157,8 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         notifyListeners();
     }
 
-    public void addGlobalSettingsChangedListener(GfmGlobalSettingsChangedListener gfmGlobalSettingsChangedListener) {
+    public void addGlobalSettingsChangedListener(GfmGlobalSettingsChangedListener gfmGlobalSettingsChangedListener, Disposable parent) {
+        Disposer.register(parent, new DisposableGlobalSettingsChangedListener(gfmGlobalSettingsChangedListener));
         listeners.add(gfmGlobalSettingsChangedListener);
     }
 
@@ -167,4 +170,16 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         }
     }
 
+    private class DisposableGlobalSettingsChangedListener implements Disposable {
+        private GfmGlobalSettingsChangedListener gfmGlobalSettingsChangedListener;
+
+        public DisposableGlobalSettingsChangedListener(GfmGlobalSettingsChangedListener gfmGlobalSettingsChangedListener) {
+            this.gfmGlobalSettingsChangedListener = gfmGlobalSettingsChangedListener;
+        }
+
+        @Override
+        public void dispose() {
+            listeners.remove(gfmGlobalSettingsChangedListener);
+        }
+    }
 }
