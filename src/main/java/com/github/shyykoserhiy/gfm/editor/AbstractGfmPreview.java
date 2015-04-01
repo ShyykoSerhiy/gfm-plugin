@@ -29,10 +29,10 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     protected boolean previewIsUpToDate = false;
     protected boolean previewIsSelected = false;
 
-    private Document document;
-    private AbstractMarkdownParser markdownParser;
-    private final VirtualFile markdownFile;
-    private final GfmGlobalSettings settings;
+    protected Document document;
+    protected AbstractMarkdownParser markdownParser;
+    protected final VirtualFile markdownFile;
+    protected final GfmGlobalSettings settings;
 
     public AbstractGfmPreview(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         this.markdownFile = markdownFile;
@@ -116,7 +116,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
      */
     public void updatePreview() {
         previewIsUpToDate = true; //todo
-        this.markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
+        this.markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText(), false);
     }
 
     public boolean isPreviewIsSelected() {
