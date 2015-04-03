@@ -59,8 +59,8 @@ public class JnaMarkdownParser extends AbstractMarkdownParser {
     }
 
     @Override
-    public GfmWorker getWorker(String filename, String markdown) {
-        return new GfmWorker(filename, markdown);
+    public GfmWorker getWorker(String filename, String markdown, boolean useFileAsSuccessResponse) {
+        return new GfmWorker(filename, markdown, useFileAsSuccessResponse);
     }
 
     private MarkdownJna.Buffer markdownToHtml(String markdown) throws PlatformNotSupported {
@@ -69,8 +69,8 @@ public class JnaMarkdownParser extends AbstractMarkdownParser {
     }
 
     private class GfmWorker extends AbstractMarkdownParser.GfmWorker {
-        public GfmWorker(String filename, String markdown) {
-            super(filename, markdown);
+        public GfmWorker(String filename, String markdown, boolean useFileAsSuccessResponse) {
+            super(filename, markdown, useFileAsSuccessResponse);
         }
 
         @Override

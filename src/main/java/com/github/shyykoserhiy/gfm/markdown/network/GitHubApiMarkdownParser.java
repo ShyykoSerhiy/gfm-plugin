@@ -15,8 +15,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -29,13 +27,13 @@ public class GitHubApiMarkdownParser extends AbstractMarkdownParser {
     }
 
     @Override
-    public AbstractMarkdownParser.GfmWorker getWorker(String filename, String markdown) {
-        return new GfmWorker(filename, markdown);
+    public AbstractMarkdownParser.GfmWorker getWorker(String filename, String markdown, boolean useFileAsSuccessResponse) {
+        return new GfmWorker(filename, markdown, useFileAsSuccessResponse);
     }
 
     private class GfmWorker extends AbstractMarkdownParser.GfmWorker {
-        public GfmWorker(String filename, String markdown) {
-            super(filename, markdown);
+        public GfmWorker(String filename, String markdown, boolean useFileAsSuccessResponse) {
+            super(filename, markdown, useFileAsSuccessResponse);
         }
 
         @Override

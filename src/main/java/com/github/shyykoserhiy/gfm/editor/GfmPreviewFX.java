@@ -5,10 +5,15 @@ import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.vfs.VirtualFile;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,7 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-public class GfmPreviewFX extends AbstractGfmPreview {
+public class GfmPreviewFX extends ModernGfmPreview {
 
     private final JPanel jPanel;
     private WebView webView;
@@ -83,6 +88,7 @@ public class GfmPreviewFX extends AbstractGfmPreview {
             @Override
             public void run() {
                 webView.getEngine().load("file:" + file.getAbsolutePath());
+                onceUpdated = true;
             }
         });
     }
@@ -125,9 +131,56 @@ public class GfmPreviewFX extends AbstractGfmPreview {
         }
 
         @Override
+        public void onRequestDone(final String title, final String markdown) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    final WebEngine webEngine = webView.getEngine();
+                    final String script = "document.getElementById('title').innerHTML = window.java.getTitle();" +
+                            "document.querySelector('.markdown-body.entry-content').innerHTML = window.java.getMarkdown();";
+                    JSObject jsobj = (JSObject) webEngine.executeScript("window");
+                    jsobj.setMember("java", new JSMarkdownBridge(markdown, title));
+                    if (webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED) {
+                        webEngine.executeScript(script);
+                        webView.requestLayout();
+                    } else {
+                        webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+                            @Override
+                            public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
+                                if (newValue == Worker.State.SUCCEEDED) {
+                                    webEngine.executeScript(script);
+                                    webView.requestLayout();
+                                }
+                            }
+                        });
+                    }
+
+                }
+            });
+        }
+
+        @Override
         public void onRequestFail(String error) {
             previewIsUpToDate = false;
             loadContent(error);
+        }
+    }
+
+    public static class JSMarkdownBridge {
+        private String markdown;
+        private String title;
+
+        public JSMarkdownBridge(String markdown, String title) {
+            this.markdown = markdown;
+            this.title = title;
+        }
+
+        public String getMarkdown() {
+            return markdown;
+        }
+
+        public String getTitle() {
+            return title;
         }
     }
 }

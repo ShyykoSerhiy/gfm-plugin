@@ -66,6 +66,11 @@ public class GfmPreviewLobo extends AbstractGfmPreview {
         }
 
         @Override
+        public void onRequestDone(String title, String markdown) {
+            //ignore
+        }
+
+        @Override
         public void onRequestFail(String error) {
             previewIsUpToDate = false;
             FileWriter fileWriter = null;

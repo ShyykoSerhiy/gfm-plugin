@@ -53,7 +53,8 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
                 gfmGlobalSettings.getSocketTimeout() != (Integer)gfmGlobalSettingsPanel.getSocketTimeoutSpinner().getValue() ||
                 !gfmGlobalSettings.getGithubAccessToken().equals(String.valueOf(gfmGlobalSettingsPanel.getGithubAccessTokenField().getPassword())) ||
                 gfmGlobalSettings.getRenderingEngine() != gfmGlobalSettingsPanel.getRenderingEngine() ||
-                gfmGlobalSettings.isUseOffline() != gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected();
+                gfmGlobalSettings.isUseOffline() != gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected() ||
+                gfmGlobalSettings.isReplacePreviewTab() != gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().isSelected();
     }
 
     @Override
@@ -63,6 +64,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettings.setSocketTimeout((Integer) gfmGlobalSettingsPanel.getSocketTimeoutSpinner().getValue());
         gfmGlobalSettings.setRenderingEngine(gfmGlobalSettingsPanel.getRenderingEngine());
         gfmGlobalSettings.setUseOffline(gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected());
+        gfmGlobalSettings.setReplacePreviewTab(gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().isSelected());
     }
 
     @Override
@@ -72,6 +74,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettingsPanel.getSocketTimeoutSpinner().setValue(gfmGlobalSettings.getSocketTimeout());
         gfmGlobalSettingsPanel.setRenderingEngine(gfmGlobalSettings.getRenderingEngine());
         gfmGlobalSettingsPanel.getUseOfflineCheckBox().setSelected(gfmGlobalSettings.isUseOffline());
+        gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().setSelected(gfmGlobalSettings.isReplacePreviewTab());
     }
 
     @Override

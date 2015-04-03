@@ -29,32 +29,17 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     protected boolean previewIsUpToDate = false;
     protected boolean previewIsSelected = false;
 
-    private Document document;
-    private AbstractMarkdownParser markdownParser;
-    private final VirtualFile markdownFile;
+    protected Document document;
+    protected AbstractMarkdownParser markdownParser;
+    protected final VirtualFile markdownFile;
+    protected final GfmGlobalSettings settings;
 
     public AbstractGfmPreview(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         this.markdownFile = markdownFile;
         this.document = document;
-        updateMarkdownParser(GfmGlobalSettings.getInstance());
-
-        // Listen to the document modifications.
-        this.document.addDocumentListener(new DocumentAdapter() {
-            @Override
-            public void documentChanged(DocumentEvent e) {
-                previewIsUpToDate = false;
-                if (previewIsSelected || isImmediateUpdate()) {//todo offline only?
-                    selectNotify();
-                }
-            }
-        });
-
-        GfmGlobalSettings.getInstance().addGlobalSettingsChangedListener(new GfmGlobalSettingsChangedListener() {
-            @Override
-            public void onGfmGlobalSettingsChanged(GfmGlobalSettings newGfmGlobalSettings) {
-                updateMarkdownParser(newGfmGlobalSettings);
-            }
-        });
+        settings = GfmGlobalSettings.getInstance();
+        updateMarkdownParser(settings);
+        addListeners();
     }
 
     @NotNull
@@ -131,7 +116,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
      */
     public void updatePreview() {
         previewIsUpToDate = true; //todo
-        this.markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText());
+        this.markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText(), false);
     }
 
     public boolean isPreviewIsSelected() {
@@ -146,5 +131,27 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
         } else {
             markdownParser = new GitHubApiMarkdownParser(getRequestDoneListener());
         }
+    }
+
+    private void addListeners() {
+        // Listen to the document modifications.
+        DocumentAdapter documentListener = new DocumentAdapter() {
+            @Override
+            public void documentChanged(DocumentEvent e) {
+                previewIsUpToDate = false;
+                if (previewIsSelected || isImmediateUpdate()) {//todo offline only?
+                    selectNotify();
+                }
+            }
+        };
+        GfmGlobalSettingsChangedListener settingsChangedListener = new GfmGlobalSettingsChangedListener() {
+            @Override
+            public void onGfmGlobalSettingsChanged(GfmGlobalSettings newGfmGlobalSettings) {
+                updateMarkdownParser(newGfmGlobalSettings);
+            }
+        };
+
+        this.document.addDocumentListener(documentListener, this);
+        settings.addGlobalSettingsChangedListener(settingsChangedListener, this);
     }
 }

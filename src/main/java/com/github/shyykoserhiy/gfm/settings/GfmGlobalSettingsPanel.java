@@ -19,6 +19,8 @@ public class GfmGlobalSettingsPanel {
     private JLabel useOfflineLabel;
     private JLabel renderingEngineLabel;
     private JComboBox renderingEngineComboBox;
+    private JCheckBox replacePreviewTabCheckBox;
+    private JLabel replacePreviewTabLabel;
 
     public GfmGlobalSettingsPanel() {
         if (!JnaMarkdownParser.isSupported()) {
@@ -47,6 +49,10 @@ public class GfmGlobalSettingsPanel {
 
     public JCheckBox getUseOfflineCheckBox() {
         return useOfflineCheckBox;
+    }
+
+    public JCheckBox getReplacePreviewTabCheckBox() {
+        return replacePreviewTabCheckBox;
     }
 
     public RenderingEngine getRenderingEngine() {
