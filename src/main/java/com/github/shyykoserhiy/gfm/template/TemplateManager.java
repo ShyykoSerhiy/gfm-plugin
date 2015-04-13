@@ -6,6 +6,7 @@ import com.intellij.openapi.util.io.FileUtil;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class TemplateManager {
@@ -43,7 +44,7 @@ public class TemplateManager {
      * @return markdown html
      */
     public String getMarkdownHtml(String filename, String gfm){
-        return markdownTemplate.applyTemplate(filename, gfm);
+        return markdownTemplate.applyTemplate(Collections.singletonMap("790px", "790px"), filename, gfm); //todo
     }
 
     public String getErrorHtml(String errorMessage, String stackTrace){
