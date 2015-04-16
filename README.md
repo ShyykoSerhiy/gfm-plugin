@@ -12,3 +12,6 @@ GitHub markdown plugin for intellij platform.
 [MIT License](http://opensource.org/licenses/mit-license.php).
 
 Many thanks to the [TeamDev](http://www.teamdev.com) for providing a free license for [JxBrowser](http://www.teamdev.com/jxbrowser), an amazing lightweight Chromium-based Swing/JavaFX component.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ShyykoSerhiy/gfm-plugin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
