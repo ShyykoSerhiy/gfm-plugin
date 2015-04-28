@@ -21,6 +21,8 @@ public class GfmGlobalSettingsPanel {
     private JComboBox renderingEngineComboBox;
     private JCheckBox replacePreviewTabCheckBox;
     private JLabel replacePreviewTabLabel;
+    private JLabel useFullWidthRenderingLabel;
+    private JCheckBox useFullWidthRenderingCheckBox;
 
     public GfmGlobalSettingsPanel() {
         if (!JnaMarkdownParser.isSupported()) {
@@ -53,6 +55,10 @@ public class GfmGlobalSettingsPanel {
 
     public JCheckBox getReplacePreviewTabCheckBox() {
         return replacePreviewTabCheckBox;
+    }
+
+    public JCheckBox getUseFullWidthRenderingCheckBox() {
+        return useFullWidthRenderingCheckBox;
     }
 
     public RenderingEngine getRenderingEngine() {

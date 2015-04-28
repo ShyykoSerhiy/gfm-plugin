@@ -54,7 +54,8 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
                 !gfmGlobalSettings.getGithubAccessToken().equals(String.valueOf(gfmGlobalSettingsPanel.getGithubAccessTokenField().getPassword())) ||
                 gfmGlobalSettings.getRenderingEngine() != gfmGlobalSettingsPanel.getRenderingEngine() ||
                 gfmGlobalSettings.isUseOffline() != gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected() ||
-                gfmGlobalSettings.isReplacePreviewTab() != gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().isSelected();
+                gfmGlobalSettings.isReplacePreviewTab() != gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().isSelected() ||
+                gfmGlobalSettings.isUseFullWidthRendering() != gfmGlobalSettingsPanel.getUseFullWidthRenderingCheckBox().isSelected();
     }
 
     @Override
@@ -65,6 +66,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettings.setRenderingEngine(gfmGlobalSettingsPanel.getRenderingEngine());
         gfmGlobalSettings.setUseOffline(gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected());
         gfmGlobalSettings.setReplacePreviewTab(gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().isSelected());
+        gfmGlobalSettings.setUseFullWidthRendering(gfmGlobalSettingsPanel.getUseFullWidthRenderingCheckBox().isSelected());
     }
 
     @Override
@@ -75,6 +77,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettingsPanel.setRenderingEngine(gfmGlobalSettings.getRenderingEngine());
         gfmGlobalSettingsPanel.getUseOfflineCheckBox().setSelected(gfmGlobalSettings.isUseOffline());
         gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().setSelected(gfmGlobalSettings.isReplacePreviewTab());
+        gfmGlobalSettingsPanel.getUseFullWidthRenderingCheckBox().setSelected(gfmGlobalSettings.isUseFullWidthRendering());
     }
 
     @Override

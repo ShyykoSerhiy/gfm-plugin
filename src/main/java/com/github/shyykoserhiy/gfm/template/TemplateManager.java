@@ -1,6 +1,7 @@
 package com.github.shyykoserhiy.gfm.template;
 
 import com.github.shyykoserhiy.gfm.resource.ResourceUnzip;
+import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
 import com.intellij.openapi.util.io.FileUtil;
 
 import java.io.File;
@@ -44,7 +45,11 @@ public class TemplateManager {
      * @return markdown html
      */
     public String getMarkdownHtml(String filename, String gfm){
-        return markdownTemplate.applyTemplate(Collections.singletonMap("790px", "790px"), filename, gfm); //todo
+        String width = "790px";
+        if (GfmGlobalSettings.getInstance().isUseFullWidthRendering()) {
+            width = "100%";
+        }
+        return markdownTemplate.applyTemplate(Collections.singletonMap("width", width), filename, gfm); //todo
     }
 
     public String getErrorHtml(String errorMessage, String stackTrace){
