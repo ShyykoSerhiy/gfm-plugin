@@ -24,4 +24,4 @@ buildLib(){
 buildLib libmarkdown.dll ./win32  CMakeListsWindowsToolchain.txt
 buildLib libmarkdown.so ./linux64 CMakeListsLinux64Toolchain.txt
 buildLib libmarkdown.so ./linux32 CMakeListsLinux32Toolchain.txt
-buildLib libmarkdown.dylib ./osx64
+buildLib libmarkdown.dylib ./osx64 CMakeListsOSXToolchain.txt

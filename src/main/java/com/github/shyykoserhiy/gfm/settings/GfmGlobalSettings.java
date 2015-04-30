@@ -25,6 +25,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private static final String RENDERING_ENGINE = "renderingEngine";
     private static final String USE_OFFLINE = "useOffline";
     private static final String REPLACE_PREVIEW_TAB = "replacePreviewTab";
+    private static final String USE_FULL_WIDTH_RENDERING = "useFullWidthRendering";
 
     private Set<GfmGlobalSettingsChangedListener> listeners = new HashSet<GfmGlobalSettingsChangedListener>();
 
@@ -34,6 +35,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private RenderingEngine renderingEngine = RenderingEngine.JX_BROWSER;
     private boolean useOffline = JnaMarkdownParser.isSupported();
     private boolean replacePreviewTab = false;
+    private boolean useFullWidthRendering = false;
 
     public static GfmGlobalSettings getInstance() {
         return ServiceManager.getService(GfmGlobalSettings.class);
@@ -115,6 +117,17 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         }
     }
 
+    public boolean isUseFullWidthRendering() {
+        return useFullWidthRendering;
+    }
+
+    public void setUseFullWidthRendering(boolean useFullWidthRendering) {
+        if (this.useFullWidthRendering != useFullWidthRendering) {
+            this.useFullWidthRendering = useFullWidthRendering;
+            notifyListeners();
+        }
+    }
+
     @Nullable
     @Override
     public Element getState() {
@@ -125,6 +138,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         element.setAttribute(RENDERING_ENGINE, String.valueOf(renderingEngine));
         element.setAttribute(USE_OFFLINE, String.valueOf(useOffline));
         element.setAttribute(REPLACE_PREVIEW_TAB, String.valueOf(replacePreviewTab));
+        element.setAttribute(USE_FULL_WIDTH_RENDERING, String.valueOf(useFullWidthRendering));
         return element;
     }
 
@@ -153,6 +167,10 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         String replacePreviewTab = state.getAttributeValue(REPLACE_PREVIEW_TAB);
         if (replacePreviewTab != null) {
             setReplacePreviewTab(Boolean.valueOf(replacePreviewTab));
+        }
+        String useFullWidthRendering = state.getAttributeValue(USE_FULL_WIDTH_RENDERING);
+        if (useFullWidthRendering != null) {
+            setUseFullWidthRendering(Boolean.valueOf(useFullWidthRendering));
         }
         notifyListeners();
     }

@@ -65,7 +65,7 @@ public class JnaMarkdownParser extends AbstractMarkdownParser {
 
     private MarkdownJna.Buffer markdownToHtml(String markdown) throws PlatformNotSupported {
         initializeJna();
-        return markdownJna.markdownToHtml(markdown, markdown.length());
+        return markdownJna.markdownToHtml(markdown, markdown.getBytes().length);
     }
 
     private class GfmWorker extends AbstractMarkdownParser.GfmWorker {

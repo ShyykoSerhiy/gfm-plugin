@@ -116,7 +116,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
      */
     public void updatePreview() {
         previewIsUpToDate = true; //todo
-        this.markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText(), false);
+        this.markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText(), true);
     }
 
     public boolean isPreviewIsSelected() {

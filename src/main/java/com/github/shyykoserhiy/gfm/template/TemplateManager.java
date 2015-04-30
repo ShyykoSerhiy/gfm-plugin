@@ -1,11 +1,13 @@
 package com.github.shyykoserhiy.gfm.template;
 
 import com.github.shyykoserhiy.gfm.resource.ResourceUnzip;
+import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
 import com.intellij.openapi.util.io.FileUtil;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class TemplateManager {
@@ -43,7 +45,11 @@ public class TemplateManager {
      * @return markdown html
      */
     public String getMarkdownHtml(String filename, String gfm){
-        return markdownTemplate.applyTemplate(filename, gfm);
+        String width = "790px";
+        if (GfmGlobalSettings.getInstance().isUseFullWidthRendering()) {
+            width = "100%";
+        }
+        return markdownTemplate.applyTemplate(Collections.singletonMap("width", width), filename, gfm); //todo
     }
 
     public String getErrorHtml(String errorMessage, String stackTrace){

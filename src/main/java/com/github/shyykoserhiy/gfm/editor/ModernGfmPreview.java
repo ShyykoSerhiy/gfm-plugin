@@ -16,4 +16,12 @@ public abstract class ModernGfmPreview extends AbstractGfmPreview {
         previewIsUpToDate = true; //todo
         markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText(), !onceUpdated);
     }
+
+    /**
+     * @param forceFullReload if true, speed optimizations are disabled for this preview update.
+     */
+    public void updatePreview(boolean forceFullReload) {
+        onceUpdated = false;
+        updatePreview();
+    }
 }

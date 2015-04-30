@@ -1,6 +1,7 @@
 package com.github.shyykoserhiy.gfm.actions;
 
 import com.github.shyykoserhiy.gfm.editor.AbstractGfmPreview;
+import com.github.shyykoserhiy.gfm.editor.ModernGfmPreview;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.fileEditor.FileEditor;
@@ -18,7 +19,11 @@ public class ReloadGfmPreviewAction extends AnAction {
                 if (editor instanceof AbstractGfmPreview) {
                     AbstractGfmPreview gfmPreview = (AbstractGfmPreview) editor;
                     if (gfmPreview.isPreviewIsSelected()) {
-                        gfmPreview.updatePreview();
+                        if (gfmPreview instanceof ModernGfmPreview) {
+                            ((ModernGfmPreview) gfmPreview).updatePreview(true);
+                        } else {
+                            gfmPreview.updatePreview();
+                        }
                     }
                 }
             }

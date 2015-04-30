@@ -1,0 +1,6 @@
+#-DCMAKE_TOOLCHAIN_FILE=CMakeListsOSXToolchain.txt
+SET(CMAKE_SYSTEM_NAME Darwin)
+
+# specify the cross compiler
+SET(CMAKE_C_COMPILER   /Applications/Xcode.app/Contents/Developer/usr/bin/gcc)
+SET(CMAKE_CXX_COMPILER /Applications/Xcode.app/Contents/Developer/usr/bin/g++)
