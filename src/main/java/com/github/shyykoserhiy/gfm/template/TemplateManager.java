@@ -7,8 +7,8 @@ import com.intellij.openapi.util.io.FileUtil;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TemplateManager {
     private static class Holder{
@@ -45,11 +45,11 @@ public class TemplateManager {
      * @return markdown html
      */
     public String getMarkdownHtml(String filename, String gfm){
-        String width = "790px";
-        if (GfmGlobalSettings.getInstance().isUseFullWidthRendering()) {
-            width = "100%";
-        }
-        return markdownTemplate.applyTemplate(Collections.singletonMap("width", width), filename, gfm); //todo
+        GfmGlobalSettings gfmGlobalSettings = GfmGlobalSettings.getInstance();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("width", gfmGlobalSettings.isUseFullWidthRendering() ? "100%" : "790px");
+        params.put("additionalCss", gfmGlobalSettings.getAdditionalCss());
+        return markdownTemplate.applyTemplate(params, filename, gfm); //todo
     }
 
     public String getErrorHtml(String errorMessage, String stackTrace){

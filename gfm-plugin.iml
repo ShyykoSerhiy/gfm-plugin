@@ -11,7 +11,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="jfxrt" level="project" />
     <orderEntry type="library" name="Loboevolution" level="project" />
-    <orderEntry type="library" name="jxbrowser-5.0" level="project" />
     <orderEntry type="library" name="runtime" level="project" />
+    <orderEntry type="library" name="jxbrowser-5.4" level="project" />
   </component>
 </module>
