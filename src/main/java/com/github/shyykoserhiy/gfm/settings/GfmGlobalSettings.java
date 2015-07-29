@@ -26,6 +26,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private static final String USE_OFFLINE = "useOffline";
     private static final String REPLACE_PREVIEW_TAB = "replacePreviewTab";
     private static final String USE_FULL_WIDTH_RENDERING = "useFullWidthRendering";
+    private static final String ADDITIONAL_CSS = "additionalCss";
 
     private Set<GfmGlobalSettingsChangedListener> listeners = new HashSet<GfmGlobalSettingsChangedListener>();
 
@@ -36,6 +37,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
     private boolean useOffline = JnaMarkdownParser.isSupported();
     private boolean replacePreviewTab = false;
     private boolean useFullWidthRendering = false;
+    private String additionalCss = "";
 
     public static GfmGlobalSettings getInstance() {
         return ServiceManager.getService(GfmGlobalSettings.class);
@@ -128,6 +130,17 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         }
     }
 
+    public String getAdditionalCss() {
+        return additionalCss;
+    }
+
+    public void setAdditionalCss(String additionalCss) {
+        if (!this.additionalCss.equals(additionalCss)) {
+            this.additionalCss = additionalCss;
+            notifyListeners();
+        }
+    }
+
     @Nullable
     @Override
     public Element getState() {
@@ -139,6 +152,7 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         element.setAttribute(USE_OFFLINE, String.valueOf(useOffline));
         element.setAttribute(REPLACE_PREVIEW_TAB, String.valueOf(replacePreviewTab));
         element.setAttribute(USE_FULL_WIDTH_RENDERING, String.valueOf(useFullWidthRendering));
+        element.setAttribute(ADDITIONAL_CSS, String.valueOf(additionalCss));
         return element;
     }
 
@@ -171,6 +185,10 @@ public class GfmGlobalSettings implements PersistentStateComponent<Element> {
         String useFullWidthRendering = state.getAttributeValue(USE_FULL_WIDTH_RENDERING);
         if (useFullWidthRendering != null) {
             setUseFullWidthRendering(Boolean.valueOf(useFullWidthRendering));
+        }
+        String additionalCss = state.getAttributeValue(ADDITIONAL_CSS);
+        if (additionalCss != null) {
+            setAdditionalCss(additionalCss);
         }
         notifyListeners();
     }

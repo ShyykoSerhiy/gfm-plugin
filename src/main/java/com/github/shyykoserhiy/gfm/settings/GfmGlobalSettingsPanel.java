@@ -23,6 +23,8 @@ public class GfmGlobalSettingsPanel {
     private JLabel replacePreviewTabLabel;
     private JLabel useFullWidthRenderingLabel;
     private JCheckBox useFullWidthRenderingCheckBox;
+    private JLabel additionalCssLabel;
+    private JTextArea additionalCssTextArea;
 
     public GfmGlobalSettingsPanel() {
         if (!JnaMarkdownParser.isSupported()) {
@@ -59,6 +61,10 @@ public class GfmGlobalSettingsPanel {
 
     public JCheckBox getUseFullWidthRenderingCheckBox() {
         return useFullWidthRenderingCheckBox;
+    }
+
+    public JTextArea getAdditionalCssTextArea() {
+        return additionalCssTextArea;
     }
 
     public RenderingEngine getRenderingEngine() {

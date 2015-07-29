@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,18 @@
 
     <change-notes><![CDATA[
         <p>
+        <b>0.1.5</b>
+        <ul>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/70">Update JxBrowser to 5.4</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/73">Darcula Scheme support (dark background, light font)</a>
+            </li>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/69">IDE Fatal Error: IPC process exited. Exit code: 127</a>
+            </li>
+        </ul>
         <b>0.1.4</b>
         <ul>
             <li>
