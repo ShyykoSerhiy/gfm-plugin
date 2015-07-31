@@ -56,7 +56,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
                 gfmGlobalSettings.isUseOffline() != gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected() ||
                 gfmGlobalSettings.isReplacePreviewTab() != gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().isSelected() ||
                 gfmGlobalSettings.isUseFullWidthRendering() != gfmGlobalSettingsPanel.getUseFullWidthRenderingCheckBox().isSelected() ||
-                !gfmGlobalSettings.getAdditionalCss().equals(gfmGlobalSettingsPanel.getAdditionalCssTextArea().getText());
+                !gfmGlobalSettings.getAdditionalCss().equals(gfmGlobalSettingsPanel.getAdditionalCssTextArea().getDocument().getText());
     }
 
     @Override
@@ -68,7 +68,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettings.setUseOffline(gfmGlobalSettingsPanel.getUseOfflineCheckBox().isSelected());
         gfmGlobalSettings.setReplacePreviewTab(gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().isSelected());
         gfmGlobalSettings.setUseFullWidthRendering(gfmGlobalSettingsPanel.getUseFullWidthRenderingCheckBox().isSelected());
-        gfmGlobalSettings.setAdditionalCss(gfmGlobalSettingsPanel.getAdditionalCssTextArea().getText());
+        gfmGlobalSettings.setAdditionalCss(gfmGlobalSettingsPanel.getAdditionalCssTextArea().getDocument().getText());
     }
 
     @Override
@@ -80,7 +80,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
         gfmGlobalSettingsPanel.getUseOfflineCheckBox().setSelected(gfmGlobalSettings.isUseOffline());
         gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().setSelected(gfmGlobalSettings.isReplacePreviewTab());
         gfmGlobalSettingsPanel.getUseFullWidthRenderingCheckBox().setSelected(gfmGlobalSettings.isUseFullWidthRendering());
-        gfmGlobalSettingsPanel.getAdditionalCssTextArea().setText(gfmGlobalSettings.getAdditionalCss());
+        gfmGlobalSettingsPanel.getAdditionalCssTextArea().getDocument().setText(gfmGlobalSettings.getAdditionalCss());
     }
 
     @Override
