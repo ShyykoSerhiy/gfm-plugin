@@ -1,6 +1,7 @@
 package com.github.shyykoserhiy.gfm.settings;
 
 import com.github.shyykoserhiy.gfm.GfmBundle;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
@@ -73,14 +74,24 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
 
     @Override
     public void reset() {
-        gfmGlobalSettingsPanel.getGithubAccessTokenField().setText(gfmGlobalSettings.getGithubAccessToken());
-        gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().setValue(gfmGlobalSettings.getConnectionTimeout());
-        gfmGlobalSettingsPanel.getSocketTimeoutSpinner().setValue(gfmGlobalSettings.getSocketTimeout());
-        gfmGlobalSettingsPanel.setRenderingEngine(gfmGlobalSettings.getRenderingEngine());
-        gfmGlobalSettingsPanel.getUseOfflineCheckBox().setSelected(gfmGlobalSettings.isUseOffline());
-        gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().setSelected(gfmGlobalSettings.isReplacePreviewTab());
-        gfmGlobalSettingsPanel.getUseFullWidthRenderingCheckBox().setSelected(gfmGlobalSettings.isUseFullWidthRendering());
-        gfmGlobalSettingsPanel.getAdditionalCssTextArea().getDocument().setText(gfmGlobalSettings.getAdditionalCss());
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        gfmGlobalSettingsPanel.getAdditionalCssTextArea().getDocument().setText(gfmGlobalSettings.getAdditionalCss());
+                        gfmGlobalSettingsPanel.getGithubAccessTokenField().setText(gfmGlobalSettings.getGithubAccessToken());
+                        gfmGlobalSettingsPanel.getConnectionTimeoutSpinner().setValue(gfmGlobalSettings.getConnectionTimeout());
+                        gfmGlobalSettingsPanel.getSocketTimeoutSpinner().setValue(gfmGlobalSettings.getSocketTimeout());
+                        gfmGlobalSettingsPanel.setRenderingEngine(gfmGlobalSettings.getRenderingEngine());
+                        gfmGlobalSettingsPanel.getUseOfflineCheckBox().setSelected(gfmGlobalSettings.isUseOffline());
+                        gfmGlobalSettingsPanel.getReplacePreviewTabCheckBox().setSelected(gfmGlobalSettings.isReplacePreviewTab());
+                        gfmGlobalSettingsPanel.getUseFullWidthRenderingCheckBox().setSelected(gfmGlobalSettings.isUseFullWidthRendering());
+                    }
+                });
+            }
+        });
     }
 
     @Override
