@@ -27,7 +27,7 @@ public class GfmPreviewProvider implements FileEditorProvider {
 
     @NotNull
     @Override
-    public FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile virtualFile) {
+    public FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile virtualFile) { //FIXME @see
         FileEditor fileEditor = null;
         Document document = FileDocumentManager.getInstance().getDocument(virtualFile);
         switch (GfmGlobalSettings.getInstance().getRenderingEngine()) {

@@ -1,5 +1,6 @@
 package com.github.shyykoserhiy.gfm.editor;
 
+import com.github.shyykoserhiy.gfm.browser.IsBrowser;
 import com.github.shyykoserhiy.gfm.markdown.AbstractMarkdownParser;
 import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
 import com.github.shyykoserhiy.gfm.markdown.network.GitHubApiMarkdownParser;
@@ -22,6 +23,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 
 @SuppressWarnings("unused")
@@ -33,6 +35,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     protected AbstractMarkdownParser markdownParser;
     protected final VirtualFile markdownFile;
     protected final GfmGlobalSettings settings;
+    protected IsBrowser browser;
 
     public AbstractGfmPreview(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         this.markdownFile = markdownFile;
@@ -46,6 +49,19 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     public FileEditorState getState(@NotNull FileEditorStateLevel fileEditorStateLevel) {
         return FileEditorState.INSTANCE;
     }
+
+    @NotNull
+    @Override
+    public JComponent getComponent() {
+        return browser.getComponent();
+    }
+
+    @Nullable
+    @Override
+    public JComponent getPreferredFocusedComponent() {
+        return getComponent();
+    }
+
 
     public void setState(@NotNull FileEditorState fileEditorState) {
         //empty
@@ -109,6 +125,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     @Override
     public void dispose() {
         Disposer.dispose(this);
+        browser.dispose();
     }
 
     /**

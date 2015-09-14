@@ -180,6 +180,7 @@
         <applicationService serviceInterface="com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings"
                             serviceImplementation="com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings"/>
         <applicationConfigurable instance="com.github.shyykoserhiy.gfm.settings.GfmGlobalSettingsConfigurable"/>
+        <toolWindow id="GfmBrowser" anchor="right" factoryClass="com.github.shyykoserhiy.gfm.toolwindow.GfmBrowserToolWindowFactory"/>
     </extensions>
 
     <application-components>
