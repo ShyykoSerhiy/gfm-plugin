@@ -62,7 +62,10 @@ public class GfmPreviewFX extends ModernGfmPreview {
                     final WebView webView = ((BrowserFx) browser).getWebView(); //FIXME refactor somehow
                     final WebEngine webEngine = webView.getEngine();
                     final String script = "document.getElementById('title').innerHTML = window.java.getTitle();" +
-                            "document.querySelector('.markdown-body.entry-content').innerHTML = window.java.getMarkdown();";
+                            "document.querySelector('.markdown-body.entry-content').innerHTML = window.java.getMarkdown();" +
+                            "Array.prototype.slice.apply(document.querySelectorAll('pre code')).forEach(function(block){" +
+                            "   hljs.highlightBlock(block);" +
+                            "});";
                     JSObject jsobj = (JSObject) webEngine.executeScript("window");
                     jsobj.setMember("java", new JSMarkdownBridge(markdown, title));
                     if (webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED) {
