@@ -13,6 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 public class GfmPreviewJX extends ModernGfmPreview {
+    private String markdown;
+    private String title;
+
 
     public GfmPreviewJX(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         super(markdownFile, document);
@@ -38,6 +41,16 @@ public class GfmPreviewJX extends ModernGfmPreview {
     private class RequestDoneListener implements GfmRequestDoneListener {
         @Override
         public void onRequestDone(final File result) {
+            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().registerFunction("getMarkdownZ", new BrowserFunction() {
+                public JSValue invoke(JSValue... args) {
+                    return JSValue.create(markdown);
+                }
+            });
+            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().registerFunction("getTitleZ", new BrowserFunction() {
+                public JSValue invoke(JSValue... args) {
+                    return JSValue.create(title);
+                }
+            });
             browser.loadUrl("file:" + result.getAbsolutePath());
             onceUpdated = true;
         }
@@ -45,20 +58,14 @@ public class GfmPreviewJX extends ModernGfmPreview {
         @Override
         public void onRequestDone(final String title, final String markdown) {
             Browser browser = ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser();
-            browser.unregisterFunction("getMarkdown");
-            browser.unregisterFunction("getTitle");
-            browser.registerFunction("getMarkdown", new BrowserFunction() {
-                public JSValue invoke(JSValue... args) {
-                    return JSValue.create(markdown);
-                }
-            });
-            browser.registerFunction("getTitle", new BrowserFunction() {
-                public JSValue invoke(JSValue... args) {
-                    return JSValue.create(title);
-                }
-            });
-            browser.executeJavaScript("document.getElementById('title').innerHTML = getTitle();" +
-                    "document.querySelector('.markdown-body.entry-content').innerHTML = getMarkdown();");
+            GfmPreviewJX.this.markdown = markdown;
+            GfmPreviewJX.this.title = title;
+
+            browser.executeJavaScript("document.getElementById('title').innerHTML = getTitleZ();" +
+                    "document.querySelector('.markdown-body.entry-content').innerHTML = getMarkdownZ();" +
+                    "Array.prototype.slice.apply(document.querySelectorAll('pre code')).forEach(function(block){" +
+                    "   hljs.highlightBlock(block);" +
+                    "});");
         }
 
         @Override

@@ -23,11 +23,18 @@ public class TemplateManager {
         HashMap<String, Object> markdownParams = new HashMap<String, Object>();
         URL githubCss;
         URL githubCss2;
+        URL highlightGithubCss;
+        URL highlightPackJs;
         try {
             githubCss = new File(outputFile, FileUtil.join("css", "github-fff66249e57e12b5b264967f6a4d21f8923d59247f86c4419d1e3092660fe54b.css")).toURI().toURL();
             githubCss2 = new File(outputFile, FileUtil.join("css", "github2-ade0148a562b52311cf36a8e5f019126eb5ef7054bf2a0463ea00c536a358d33.css")).toURI().toURL();
+            highlightGithubCss = new File(outputFile, FileUtil.join("css", "highlightjs8_8_0", "github.css")).toURI().toURL();
+            highlightPackJs = new File(outputFile, FileUtil.join("css", "highlightjs8_8_0", "highlight.pack.js")).toURI().toURL();
+
             markdownParams.put("github.css", githubCss.toExternalForm());
             markdownParams.put("github2.css", githubCss2.toExternalForm());
+            markdownParams.put("highlight.github.css", highlightGithubCss.toExternalForm());
+            markdownParams.put("highlight.pack.js", highlightPackJs.toExternalForm());
         } catch (MalformedURLException e) {
             e.printStackTrace(); //todo?
         }
