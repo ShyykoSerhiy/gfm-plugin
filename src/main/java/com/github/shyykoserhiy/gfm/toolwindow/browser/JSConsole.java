@@ -2,6 +2,7 @@ package com.github.shyykoserhiy.gfm.toolwindow.browser;
 
 import com.github.shyykoserhiy.gfm.browser.IsBrowser;
 import com.github.shyykoserhiy.gfm.toolwindow.browser.resources.Resources;
+import com.intellij.ui.JBColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -93,8 +94,11 @@ public class JSConsole extends JPanel {
         closeButton.setOpaque(false);
         closeButton.setToolTipText("Close JavaScript Console");
         closeButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        closeButton.setPressedIcon(Resources.getIcon("close-pressed.png"));
-        closeButton.setIcon(Resources.getIcon("close.png"));
+        closeButton.setIcon(Resources.getIcon("stop.png"));
+        closeButton.setPressedIcon(Resources.getIcon("stop_c.png"));
+        closeButton.setMargin(new Insets(0, 0, 0, 0));
+        closeButton.setBackground(new JBColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 0)));
+        closeButton.setBorder(null);
         closeButton.setContentAreaFilled(false);
         closeButton.setFocusable(false);
         closeButton.addActionListener(new ActionListener() {

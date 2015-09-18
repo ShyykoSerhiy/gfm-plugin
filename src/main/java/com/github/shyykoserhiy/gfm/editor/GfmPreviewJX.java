@@ -41,12 +41,12 @@ public class GfmPreviewJX extends ModernGfmPreview {
     private class RequestDoneListener implements GfmRequestDoneListener {
         @Override
         public void onRequestDone(final File result) {
-            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().registerFunction("getMarkdownZ", new BrowserFunction() {
+            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().registerFunction("getMarkdown", new BrowserFunction() {
                 public JSValue invoke(JSValue... args) {
                     return JSValue.create(markdown);
                 }
             });
-            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().registerFunction("getTitleZ", new BrowserFunction() {
+            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().registerFunction("getTitle", new BrowserFunction() {
                 public JSValue invoke(JSValue... args) {
                     return JSValue.create(title);
                 }
@@ -61,8 +61,8 @@ public class GfmPreviewJX extends ModernGfmPreview {
             GfmPreviewJX.this.markdown = markdown;
             GfmPreviewJX.this.title = title;
 
-            browser.executeJavaScript("document.getElementById('title').innerHTML = getTitleZ();" +
-                    "document.querySelector('.markdown-body.entry-content').innerHTML = getMarkdownZ();" +
+            browser.executeJavaScript("document.getElementById('title').innerHTML = getTitle();" +
+                    "document.querySelector('.markdown-body.entry-content').innerHTML = getMarkdown();" +
                     "Array.prototype.slice.apply(document.querySelectorAll('pre code')).forEach(function(block){" +
                     "   hljs.highlightBlock(block);" +
                     "});");
