@@ -2,6 +2,7 @@ package com.github.shyykoserhiy.gfm.toolwindow.browser;
 
 import com.github.shyykoserhiy.gfm.browser.IsBrowser;
 import com.github.shyykoserhiy.gfm.toolwindow.browser.resources.Resources;
+import com.intellij.ui.JBColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -142,8 +143,11 @@ public class ToolBar extends JPanel {
     private static JButton createButton(String caption, Action action) {
         ActionButton button = new ActionButton(caption, action);
         String imageName = caption.toLowerCase();
+        button.setMargin(new Insets(0, 0, 0, 0));
+        button.setBackground(new JBColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 0)));
+        button.setBorder(null);
         button.setIcon(Resources.getIcon(imageName + ".png"));
-        button.setRolloverIcon(Resources.getIcon(imageName + "-selected.png"));
+        button.setRolloverIcon(Resources.getIcon(imageName + "_c.png"));
         return button;
     }
 
@@ -153,6 +157,10 @@ public class ToolBar extends JPanel {
 
         final ActionButton button = new ActionButton("Preferences", null);
         button.setIcon(Resources.getIcon("gear.png"));
+        button.setRolloverIcon(Resources.getIcon("gear_c.png"));
+        button.setMargin(new Insets(0, 0, 0, 0));
+        button.setBackground(new JBColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 0)));
+        button.setBorder(null);
         button.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if ((e.getModifiers() & InputEvent.BUTTON1_MASK) != 0) {
