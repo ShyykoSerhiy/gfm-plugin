@@ -132,16 +132,16 @@ public class BrowserJx implements IsBrowser {
 
     @Override
     public String getUrl() {
-        return null;
+        return webView.getBrowser().getURL();
     }
 
     @Override
     public boolean canGoForward() {
-        return false;
+        return webView.getBrowser().canGoForward();
     }
 
     @Override
     public boolean canGoBack() {
-        return false;
+        return webView.getBrowser().canGoBack();
     }
 }
