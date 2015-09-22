@@ -20,6 +20,7 @@ public class GfmPreviewJX extends ModernGfmPreview {
     public GfmPreviewJX(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         super(markdownFile, document);
         this.browser = new BrowserJx();
+        addPopupListener();
     }
 
     @Override

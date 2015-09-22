@@ -24,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 
 @SuppressWarnings("unused")
@@ -142,6 +144,10 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
 
     protected abstract GfmRequestDoneListener getRequestDoneListener();
 
+    protected void addPopupListener() {
+        getComponent().addMouseListener(new PopClickListener());
+    }
+
     private void updateMarkdownParser(GfmGlobalSettings gfmGlobalSettings) {
         if (gfmGlobalSettings.isUseOffline() && JnaMarkdownParser.isSupported()) {
             markdownParser = new JnaMarkdownParser(getRequestDoneListener());
@@ -170,5 +176,31 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
 
         this.document.addDocumentListener(documentListener, this);
         settings.addGlobalSettingsChangedListener(settingsChangedListener, this);
+    }
+
+    class PopClickListener extends MouseAdapter {
+        public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger())
+                doPop(e);
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger())
+                doPop(e);
+        }
+
+        private void doPop(MouseEvent e) {
+            PopUpDemo menu = new PopUpDemo();
+            menu.show(e.getComponent(), e.getX(), e.getY());
+        }
+    }
+
+    class PopUpDemo extends JPopupMenu {
+        JMenuItem anItem;
+
+        public PopUpDemo() {
+            anItem = new JMenuItem("Get HTML");
+            add(anItem);
+        }
     }
 }

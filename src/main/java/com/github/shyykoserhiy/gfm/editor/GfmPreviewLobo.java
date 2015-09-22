@@ -16,6 +16,7 @@ public class GfmPreviewLobo extends AbstractGfmPreview {
     public GfmPreviewLobo(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         super(markdownFile, document);
         this.browser = new BrowserLobo();
+        addPopupListener();
     }
 
     @NotNull
