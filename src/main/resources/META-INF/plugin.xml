@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.1.5</version>
+    <version>0.1.6</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,30 @@
 
     <change-notes><![CDATA[
         <p>
+        <b>0.1.6</b>
+        <ul>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/75">Change css textArea in settings to editor</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/67">Syntax coloring would be a really nice enhancement!</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/65">Export html</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/60">Simple Web Viewer</a>
+            </li>
+            <li>
+                Resolved <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/23">Add export to html</a>
+            </li>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/82">Back button doesn't work in JxBrowser</a>
+            </li>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/80">Hot(js) refresh of markdown is broken in master</a>
+            </li>
+        </ul>
         <b>0.1.5</b>
         <ul>
             <li>
