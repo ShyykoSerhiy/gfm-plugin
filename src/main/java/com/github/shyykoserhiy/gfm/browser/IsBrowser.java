@@ -30,6 +30,8 @@ public interface IsBrowser extends Disposable {
 
     String getUrl();
 
+    String getHtml();
+
     boolean canGoForward();
 
     boolean canGoBack();

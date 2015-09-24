@@ -7,10 +7,13 @@ import com.github.shyykoserhiy.gfm.markdown.network.GitHubApiMarkdownParser;
 import com.github.shyykoserhiy.gfm.markdown.offline.JnaMarkdownParser;
 import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
 import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettingsChangedListener;
+import com.github.shyykoserhiy.gfm.ui.Utils;
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.fileEditor.FileEditor;
@@ -24,6 +27,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
@@ -38,6 +43,8 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     protected final VirtualFile markdownFile;
     protected final GfmGlobalSettings settings;
     protected IsBrowser browser;
+
+    private PopClickListener popClickListener;
 
     public AbstractGfmPreview(@NotNull VirtualFile markdownFile, @NotNull Document document) {
         this.markdownFile = markdownFile;
@@ -128,6 +135,9 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     public void dispose() {
         Disposer.dispose(this);
         browser.dispose();
+        if (popClickListener != null) {
+            getComponent().removeMouseListener(popClickListener);
+        }
     }
 
     /**
@@ -145,7 +155,8 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     protected abstract GfmRequestDoneListener getRequestDoneListener();
 
     protected void addPopupListener() {
-        getComponent().addMouseListener(new PopClickListener());
+        popClickListener = new PopClickListener();
+        getComponent().addMouseListener(popClickListener);
     }
 
     private void updateMarkdownParser(GfmGlobalSettings gfmGlobalSettings) {
@@ -200,6 +211,31 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
 
         public PopUpDemo() {
             anItem = new JMenuItem("Get HTML");
+            anItem.addActionListener(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    final String html = browser.getHtml();
+                    Window window = SwingUtilities.getWindowAncestor(AbstractGfmPreview.this.getComponent());
+                    JDialog dialog = new JDialog(window);
+                    dialog.setModal(true);
+                    final Editor editor = Utils.createEditor("html");
+                    dialog.setContentPane(editor.getComponent());
+                    dialog.setSize(700, 500);
+                    dialog.setLocationRelativeTo(null);
+                    ApplicationManager.getApplication().invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                                @Override
+                                public void run() {
+                                    editor.getDocument().setText(html);
+                                }
+                            });
+                        }
+                    });
+                    dialog.setVisible(true);
+                }
+            });
             add(anItem);
         }
     }
