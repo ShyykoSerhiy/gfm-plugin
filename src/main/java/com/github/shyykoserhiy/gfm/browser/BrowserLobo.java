@@ -83,6 +83,11 @@ public class BrowserLobo implements IsBrowser {
     }
 
     @Override
+    public String getHtml() {
+        return webView.getSourceCode();
+    }
+
+    @Override
     public boolean canGoForward() {
         return false;//todo throw unsupported exception?
     }

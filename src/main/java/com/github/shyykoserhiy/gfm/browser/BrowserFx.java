@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.concurrent.*;
 
 public class BrowserFx implements IsBrowser {
     private final JPanel jPanel;
@@ -151,6 +152,27 @@ public class BrowserFx implements IsBrowser {
     @Override
     public String getUrl() {
         return webView.getEngine().getLocation();
+    }
+
+    @Override
+    public String getHtml() {
+        FutureTask<String> futureTask = new FutureTask<String>(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return (String) webView.getEngine().executeScript("document.documentElement.outerHTML");
+            }
+        });
+        String result = "";
+        try {
+            result = futureTask.get(1000, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
