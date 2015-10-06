@@ -19,6 +19,12 @@
 
     <change-notes><![CDATA[
         <p>
+        <b>0.1.8</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/91">Doesnt work with Mac and IntelliJ 15 Preview (JNA incompatibility)</a>
+            </li>
+        </ul>
         <b>0.1.7</b>
         <ul>
             <li>
