@@ -4,6 +4,9 @@ import com.sun.jna.Library;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
+import java.util.Arrays;
+import java.util.List;
+
 public interface MarkdownJna extends Library {
     Buffer markdownToHtml(String markdown, long markdownSize);
 
@@ -12,6 +15,11 @@ public interface MarkdownJna extends Library {
         public int size;	/* size of the string */
         public int asize;	/* allocated size (0 = volatile buffer) */
         public int unit;	/* reallocation unit size (0 = read-only buffer) */
+
+        @Override
+        protected List getFieldOrder() {
+            return Arrays.asList(new String[]{"data", "size", "asize", "unit"});
+        }
 
         @Override
         public String toString() {
