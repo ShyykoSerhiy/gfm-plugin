@@ -4,6 +4,7 @@ import com.sun.jna.Library;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +30,13 @@ public interface MarkdownJna extends Library {
                     throw new OutOfMemoryError("String exceeds maximum length: " + len);
                 }
                 byte[] data = this.data.getByteArray(0, (int) len);
-                return new String(data);
+                String text;
+                try {
+                    text = new String(data, System.getProperty("jna.encoding", "utf8"));
+                } catch (UnsupportedEncodingException e) {
+                    text = new String(data);
+                }
+                return text;
             }
             return data.getString(0, false);
         }

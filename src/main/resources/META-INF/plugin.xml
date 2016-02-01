@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.1.8</version>
+    <version>0.1.9</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,21 @@
 
     <change-notes><![CDATA[
         <p>
+        <b>0.1.9</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/103">Gfm does not retain encoding in Windows, garbles non-ASCII text</a>
+            </li>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/102">Chinese garbled on Windows platform</a>
+            </li>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/68">German umlauts (ä,ö,ü,ß)</a>
+            </li>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/64">Cyrillic support</a>
+            </li>
+        </ul>
         <b>0.1.8</b>
         <ul>
             <li>
