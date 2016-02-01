@@ -4,8 +4,10 @@ import com.github.shyykoserhiy.gfm.settings.GfmGlobalSettings;
 import com.github.shyykoserhiy.gfm.template.TemplateManager;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 
 public abstract class AbstractMarkdownParser {
     private ThrottlePoolExecutor connectionsThreadPool = new ThrottlePoolExecutor(500);
@@ -46,9 +48,9 @@ public abstract class AbstractMarkdownParser {
             if (useFileAsSuccessResponse) {
                 String responseText = templateManager.getMarkdownHtml(filename, html);
                 File file = File.createTempFile("markdown", ".html"); //todo get rid of files (Fix Lobo to accept Strings?)
-                FileWriter fileWriter = new FileWriter(file);
-                fileWriter.write(responseText);
-                fileWriter.close();
+                OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8"));
+                writer.write(responseText);
+                writer.close();
                 requestDoneListener.onRequestDone(file);
             } else {
                 requestDoneListener.onRequestDone(filename, html);
