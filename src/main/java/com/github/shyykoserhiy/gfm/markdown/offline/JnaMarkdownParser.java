@@ -10,6 +10,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 public class JnaMarkdownParser extends AbstractMarkdownParser {
     private static boolean jnaInitialized;
@@ -65,7 +66,7 @@ public class JnaMarkdownParser extends AbstractMarkdownParser {
 
     private MarkdownJna.Buffer markdownToHtml(String markdown) throws PlatformNotSupported {
         initializeJna();
-        return markdownJna.markdownToHtml(markdown, markdown.getBytes().length);
+        return markdownJna.markdownToHtml(markdown, markdown.getBytes(Charset.forName("UTF-8")).length);
     }
 
     private class GfmWorker extends AbstractMarkdownParser.GfmWorker {
