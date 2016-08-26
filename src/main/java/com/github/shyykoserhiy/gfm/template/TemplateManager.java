@@ -54,7 +54,7 @@ public class TemplateManager {
     public String getMarkdownHtml(String filename, String gfm){
         GfmGlobalSettings gfmGlobalSettings = GfmGlobalSettings.getInstance();
         Map<String, String> params = new HashMap<String, String>();
-        params.put("width", gfmGlobalSettings.isUseFullWidthRendering() ? "100%" : "790px");
+        params.put("width", gfmGlobalSettings.isUseFullWidthRendering() ? "100%" : "980px");
         params.put("additionalCss", gfmGlobalSettings.getAdditionalCss());
         return markdownTemplate.applyTemplate(params, filename, gfm); //todo
     }

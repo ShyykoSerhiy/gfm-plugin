@@ -42,15 +42,18 @@
         <div class="container">
             <div class="repository-with-sidebar repo-container with-full-navigation">
                 <div class="repository-content context-loader-container">
-                    <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
+                    <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
                         <h3>
-                            <span class="octicon octicon-book"></span>
+                            <svg aria-hidden="true" class="octicon octicon-book" height="16" version="1.1"
+                                 viewBox="0 0 16 16" width="16">
+                                <path d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"></path>
+                            </svg>
                             <span id="title">{0}</span>
                         </h3>
 
-                        <div class="markdown-body entry-content">
+                        <article class="markdown-body entry-content" itemprop="text">
                             {1}
-                        </div>
+                        </article>
                     </div>
                 </div>
             </div>
