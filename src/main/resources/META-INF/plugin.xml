@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.1.10</version>
+    <version>0.1.11</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,12 @@
 
     <change-notes><![CDATA[
         <p>
+        <b>0.1.11</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/113">Editor of class com.intellij.openapi.editor.impl.EditorImpl hasn't been released</a>
+            </li>
+        </ul>
         <b>0.1.10</b>
         <ul>
             <li>
