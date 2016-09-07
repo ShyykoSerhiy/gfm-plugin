@@ -4,13 +4,15 @@ import com.github.shyykoserhiy.gfm.GfmBundle;
 import com.github.shyykoserhiy.gfm.editor.RenderingEngine;
 import com.github.shyykoserhiy.gfm.markdown.offline.JnaMarkdownParser;
 import com.github.shyykoserhiy.gfm.ui.Utils;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.impl.EditorImpl;
 
 import javax.swing.*;
 import java.awt.*;
 
 @SuppressWarnings("unused")
-public class GfmGlobalSettingsPanel {
+public class GfmGlobalSettingsPanel implements Disposable {
     private JPasswordField githubAccessTokenField;
     private JLabel githubAccessTokenLabel;
     private JLabel connectionTimeoutLabel;
@@ -85,5 +87,16 @@ public class GfmGlobalSettingsPanel {
         additionalCssPanel = new JPanel(new BorderLayout());
         this.additionalCssTextArea = Utils.createEditor("css");
         this.additionalCssPanel.add(this.additionalCssTextArea.getComponent(), "Center");
+    }
+
+    @Override
+    public void dispose() {
+        if (this.additionalCssTextArea instanceof EditorImpl) {
+            EditorImpl editor = (EditorImpl) additionalCssTextArea;
+            if (!editor.isDisposed()) {//!isReleased
+                //for some reason Editor is not Disposable. release in this case is dispose.
+                editor.release();
+            }
+        }
     }
 }

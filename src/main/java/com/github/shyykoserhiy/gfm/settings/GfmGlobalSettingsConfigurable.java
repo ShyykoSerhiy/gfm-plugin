@@ -4,6 +4,7 @@ import com.github.shyykoserhiy.gfm.GfmBundle;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
+import com.intellij.openapi.util.Disposer;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -96,6 +97,7 @@ public class GfmGlobalSettingsConfigurable implements SearchableConfigurable {
 
     @Override
     public void disposeUIResources() {
+        Disposer.dispose(this.gfmGlobalSettingsPanel);
         this.gfmGlobalSettingsPanel = null;
     }
 }
