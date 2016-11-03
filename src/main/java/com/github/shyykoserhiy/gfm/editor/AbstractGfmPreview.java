@@ -81,7 +81,7 @@ public abstract class AbstractGfmPreview extends UserDataHolderBase implements D
     }
 
     public boolean isValid() {
-        return document.getTextLength() != 0;
+        return document != null;
     }
 
     /**
