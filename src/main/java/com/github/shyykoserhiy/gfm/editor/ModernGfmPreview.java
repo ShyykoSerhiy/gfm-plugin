@@ -14,7 +14,7 @@ public abstract class ModernGfmPreview extends AbstractGfmPreview {
     @Override
     public void updatePreview() {
         previewIsUpToDate = true; //todo
-        markdownParser.queueMarkdownHtmlRequest(markdownFile.getName(), document.getText(), !onceUpdated);
+        markdownParser.queueMarkdownHtmlRequest(markdownFile.getParent().getCanonicalPath(), markdownFile.getName(), document.getText(), !onceUpdated);
     }
 
     /**
