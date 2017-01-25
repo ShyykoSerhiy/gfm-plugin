@@ -22,21 +22,23 @@ public abstract class AbstractMarkdownParser {
         globalSettings = GfmGlobalSettings.getInstance();
     }
 
-    public void queueMarkdownHtmlRequest(String filename, String markdown, boolean useFileAsSuccessResponse) {
-        connectionsThreadPool.submit(getWorker(filename, markdown, useFileAsSuccessResponse));
+    public void queueMarkdownHtmlRequest(String parentFolder, String filename, String markdown, boolean useFileAsSuccessResponse) {
+        connectionsThreadPool.submit(getWorker(parentFolder, filename, markdown, useFileAsSuccessResponse));
     }
 
-    public abstract GfmWorker getWorker(String filename, String markdown, boolean useFileAsSuccessResponse);
+    public abstract GfmWorker getWorker(String parentFolder, String filename, String markdown, boolean useFileAsSuccessResponse);
 
 
     protected abstract class GfmWorker implements Runnable {
+        protected String parentFolder;
         protected String filename;
         protected String markdown;
         protected boolean useFileAsSuccessResponse;
 
-        public GfmWorker(String filename, String markdown, boolean useFileAsSuccessResponse) {
+        public GfmWorker(String parentFolder, String filename, String markdown, boolean useFileAsSuccessResponse) {
+            this.parentFolder = parentFolder;
             this.filename = filename;
-            this.markdown = markdown;
+            this.markdown = new ImageUtil().processImagesUrl(markdown, parentFolder);
             this.useFileAsSuccessResponse = useFileAsSuccessResponse;
         }
 

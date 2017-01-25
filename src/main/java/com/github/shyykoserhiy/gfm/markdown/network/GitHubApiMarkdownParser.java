@@ -27,13 +27,13 @@ public class GitHubApiMarkdownParser extends AbstractMarkdownParser {
     }
 
     @Override
-    public AbstractMarkdownParser.GfmWorker getWorker(String filename, String markdown, boolean useFileAsSuccessResponse) {
-        return new GfmWorker(filename, markdown, useFileAsSuccessResponse);
+    public AbstractMarkdownParser.GfmWorker getWorker(String parentFolder, String filename, String markdown, boolean useFileAsSuccessResponse) {
+        return new GfmWorker(parentFolder, filename, markdown, useFileAsSuccessResponse);
     }
 
     private class GfmWorker extends AbstractMarkdownParser.GfmWorker {
-        public GfmWorker(String filename, String markdown, boolean useFileAsSuccessResponse) {
-            super(filename, markdown, useFileAsSuccessResponse);
+        public GfmWorker(String parentFolder, String filename, String markdown, boolean useFileAsSuccessResponse) {
+            super(parentFolder, filename, markdown, useFileAsSuccessResponse);
         }
 
         @Override
