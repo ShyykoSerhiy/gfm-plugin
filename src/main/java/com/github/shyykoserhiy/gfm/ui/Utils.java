@@ -22,6 +22,11 @@ public class Utils {
         return editor;
     }
 
+    public static void releaseEditor(Editor editor) {
+        EditorFactory editorFactory = EditorFactory.getInstance();
+        editorFactory.releaseEditor(editor);
+    }
+
     private static void setHighlighting(EditorEx editor, String fileExtension) {
         FileType cssFileType = FileTypeManager.getInstance().getFileTypeByExtension(fileExtension);
         if (cssFileType != UnknownFileType.INSTANCE) {

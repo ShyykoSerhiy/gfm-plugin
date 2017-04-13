@@ -92,10 +92,9 @@ public class GfmGlobalSettingsPanel implements Disposable {
     @Override
     public void dispose() {
         if (this.additionalCssTextArea instanceof EditorImpl) {
-            EditorImpl editor = (EditorImpl) additionalCssTextArea;
-            if (!editor.isDisposed()) {//!isReleased
+            if (!additionalCssTextArea.isDisposed()) {//!isReleased
                 //for some reason Editor is not Disposable. release in this case is dispose.
-                editor.release();
+                Utils.releaseEditor(additionalCssTextArea);
             }
         }
     }
