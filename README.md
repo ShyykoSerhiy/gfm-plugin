@@ -1,13 +1,13 @@
 # gfm-plugin
 GitHub markdown plugin for intellij platform.
 
-###Features
+### Features
 
 *   GitHub flavored preview.
 *   Full offline support.
 *   Plays well with other markdown plugins.
 
-###License
+### License
 
 [MIT License](http://opensource.org/licenses/mit-license.php).
 
