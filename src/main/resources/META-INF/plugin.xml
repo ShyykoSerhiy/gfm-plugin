@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.1.13</version>
+    <version>0.1.14</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,15 @@
 
     <change-notes><![CDATA[
         <p>
+        <b>0.1.14</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/134">Markdown Preview tab replace errors out.</a>
+            </li>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/issues/120">setting 'Replace Markdown plugin Preview tab', IDE fatal Errors.</a>
+            </li>
+        </ul>
         <b>0.1.13</b>
         <ul>
             <li>
