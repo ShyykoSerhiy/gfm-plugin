@@ -38,7 +38,7 @@ public interface MarkdownJna extends Library {
                 }
                 return text;
             }
-            return data.getString(0, false);
+            return data.getString(0);
         }
     }
 }
