@@ -29,4 +29,5 @@ dependencies {
 
 intellij {
     version '2016.2'
+    updateSinceUntilBuild false
 }
