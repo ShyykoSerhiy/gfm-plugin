@@ -73,13 +73,13 @@ public class BrowserJx implements IsBrowser {
     public void executeJavaScriptAndReturnValue(String script, JsExecutedListener jsExecutedListener) {
         JSValue jsValue = webView.getBrowser().executeJavaScriptAndReturnValue(script);
         if (jsValue.isBoolean()) {
-            jsExecutedListener.onJsExecuted(Boolean.toString(jsValue.getBoolean()));
+            jsExecutedListener.onJsExecuted(Boolean.toString(jsValue.getBooleanValue()));
         }
         if (jsValue.isFunction()) {
-            jsExecutedListener.onJsExecuted(jsValue.getString());
+            jsExecutedListener.onJsExecuted(jsValue.getStringValue());
         }
         if (jsValue.isNumber()) {
-            jsExecutedListener.onJsExecuted(Double.toString(jsValue.getNumber()));
+            jsExecutedListener.onJsExecuted(Double.toString(jsValue.getNumberValue()));
         }
         jsExecutedListener.onJsExecuted(jsValue.toString());
     }

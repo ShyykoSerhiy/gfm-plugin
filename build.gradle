@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.8'
+}
+
+group 'gfm-plugin'
+version '0.2.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+dependencies {
+    compile(name: 'jfxrt')
+    compile(name: 'Loboevolution')
+    compile(name: 'jxbrowser/jxbrowser-6.23.1')
+    compile(name: 'jxbrowser/jxbrowser-linux64-6.23.1')
+    compile(name: 'jxbrowser/jxbrowser-mac-6.23.1')
+    compile(name: 'jxbrowser/jxbrowser-win32-6.23.1')
+    compile(name: 'jxbrowser/jxbrowser-win64-6.23.1')
+    compile(name: 'jxbrowser/licence')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+intellij {
+    version '2016.2'
+}

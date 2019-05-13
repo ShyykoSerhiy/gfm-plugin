@@ -6,8 +6,10 @@ import com.github.shyykoserhiy.gfm.markdown.GfmRequestDoneListener;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSFunctionCallback;
 import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.events.ScriptContextAdapter;
+import com.teamdev.jxbrowser.chromium.events.ScriptContextEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -42,16 +44,16 @@ public class GfmPreviewJX extends ModernGfmPreview {
     private class RequestDoneListener implements GfmRequestDoneListener {
         @Override
         public void onRequestDone(final File result) {
-            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().registerFunction("getMarkdown", new BrowserFunction() {
-                public JSValue invoke(JSValue... args) {
-                    return JSValue.create(markdown);
+            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().addScriptContextListener(new ScriptContextAdapter() {
+                @Override
+                public void onScriptContextCreated(ScriptContextEvent event) {
+                    Browser browser = event.getBrowser();
+                    JSValue window = browser.executeJavaScriptAndReturnValue("window");
+                    window.asObject().setProperty("getMarkdown", (JSFunctionCallback) args -> markdown);
+                    window.asObject().setProperty("getTitle", (JSFunctionCallback) args -> title);
                 }
             });
-            ((BrowserJx) GfmPreviewJX.this.browser).getWebView().getBrowser().registerFunction("getTitle", new BrowserFunction() {
-                public JSValue invoke(JSValue... args) {
-                    return JSValue.create(title);
-                }
-            });
+
             browser.loadUrl("file:" + result.getAbsolutePath());
             onceUpdated = true;
         }

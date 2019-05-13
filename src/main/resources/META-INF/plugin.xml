@@ -1,7 +1,7 @@
-<idea-plugin version="2">
+<idea-plugin>
     <id>com.github.shyykoserhiy.gfm</id>
     <name>gfm</name>
-    <version>0.1.14</version>
+    <version>0.2.0</version>
     <vendor email="shyyko.serhiy@gmail.com" url="https://github.com/shyykoserhiy/gfm-plugin">Shyyko Serhiy</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,15 @@
 
     <change-notes><![CDATA[
         <p>
+        <b>0.2.0</b>
+        <ul>
+            <li>
+                Fixed <a href="https://github.com/ShyykoSerhiy/gfm-plugin/pull/149">Replaces deprecated method call (2019.2+ compat).</a>
+            </li>
+            <li>
+                Updated JXBrowser and hopefully fixed java.lang.ExceptionInInitializerError at com.teamdev.jxbrowser.chromium.internal.ipc.IPC.getDefault errors.
+            </li>
+        </ul>
         <b>0.1.14</b>
         <ul>
             <li>
