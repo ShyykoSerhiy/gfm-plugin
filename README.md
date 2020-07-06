@@ -1,3 +1,5 @@
+# Deprecated
+
 # gfm-plugin
 GitHub markdown plugin for intellij platform.
 
