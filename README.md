@@ -1,4 +1,5 @@
 # Deprecated
+You should check out https://github.com/Hinaser/gfm-advanced instead.
 
 # gfm-plugin
 GitHub markdown plugin for intellij platform.
